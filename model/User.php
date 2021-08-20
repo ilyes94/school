@@ -291,6 +291,16 @@ class User{
                 echo "<label class='label-control'>E-mail</label>";
                 echo "<input type='text' name='email' id='email' class='form-control' value=".$row['email']." required>";
             echo "</div>";
+            echo "<input type='submit' name='update' value='Modifier' class='btn btn-success'>";
+        echo '</form>';
+    }
+    function genUpdatePwd(){
+        $stmt = $this->getSqlSingleUserByID($this->id_utilisateur);
+
+        $row = $stmt->execute();
+        $row = $stmt->fetch();
+        echo "<form class='form' action='' method='post'>";
+            echo "<input type='hidden' value='". $row['id_utilisateur']."' name='id_utilisateur' />";
             echo "<div class='form-group'>";
                 echo "<label class='label-control'>Nouveau mot de passe</label>";
                 echo "<input type='password' name='password' id='password' class='form-control'>";
@@ -302,7 +312,7 @@ class User{
             echo "<input type='submit' name='update' value='Modifier' class='btn btn-success'>";
         echo '</form>';
     }
-
+    
     public function getSqlUsers(){
         $database = new Database();
         $conn = $database->getConnection();

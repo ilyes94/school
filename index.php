@@ -22,6 +22,7 @@ if (session_status() === PHP_SESSION_NONE) {
 	$router->map('GET|POST', '/ajout-utilisateur', 'ajout-utilisateur', 'ajout-utilisateur');
 	//Compte
 	$router->map('GET|POST', '/mon-compte/[i:id]', 'mon-compte', 'mon-compte');
+	$router->map('GET|POST', '/modif-mot-de-passe/[i:id]', 'modif-pass', 'modif-pass');
 
 	$match = $router->match();
 	if(is_array($match)){

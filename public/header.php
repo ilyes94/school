@@ -11,7 +11,7 @@
     /* param : unlog  ou user ou admin */
     //if (!isset($_SESSION['isLogged'])){
         $_SESSION['userType'] = "admin";
-        $_SESSION['id'] = 1;      
+        $_SESSION['id'] = 6;      
     //}
     
     //$page = basename($_SERVER["PHP_SELF"]);

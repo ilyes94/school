@@ -1,7 +1,7 @@
 <?php
     $user = new User();
 
-    $titlePage = "Mon compte";
+    $titlePage = "Modifier mon mot de passe";
 
 
     @$id_utilisateur=$params['id'];
@@ -15,43 +15,38 @@
     }
 
     if(!empty($_POST)){
-        //Initialisation de l'objet
-        $user->setLogin($_POST['login']);
-        $user->setEmail($_POST['email']);
-        
+        $hashPwd = hash ('sha256', $_POST['password']);
         //Verification des champs
-        if(empty($_POST['login'] && $_POST['email'])){
+        if(empty($_POST['password'] && $_POST['confPassword'])){
             $error = true;
             $message = "Veuillez remplir tout les champs";
         }
-        //Verification du mail
-        $tab = $user->sqlVerifEmail($user->getEmail());
-        if($tab['id_utilisateur'] != $user->getIdUtilisateur()){
+        //Verification du mdp
+        if($_POST['password'] != $_POST['confPassword']){
             $error = true;
-            $message = "L'adresse e-mail existe déjà";
+            $message = "Les mots de passe ne sont pas identiques";
         }else{
             $database = new Database();
             $conn = $database->getConnection();
-            $stmt = $conn->prepare("UPDATE utilisateur SET login = :login, email = :email WHERE id_utilisateur = :id");
+            $stmt = $conn->prepare("UPDATE utilisateur SET pwd = :pwd WHERE id_utilisateur = :id");
             $stmt->execute([
                 'id' => $user->getIdUtilisateur(),
-                'login' =>$user->getLogin(),
-                'email' =>$user->getEmail()
+                'pwd' => $hashPwd
             ]);
             $success = true;
         }
     }
 ?>
 <div class="jumbotron">
-	<h1>Modifier mon compte</h1>
+	<h1>Modifier mon mot de passe</h1>
     <p class="box-return"><a href="<?= $router->generate('dashboard')?>"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i>
     <u>Retour à la liste des utilisateur</u></a></p>
     <?php if($error == true){?>
         <div class='alert alert-danger'><?=$message?></div>
     <?php } elseif ($success == true){ ?>
-        <div class='alert alert-success'>Votre profil à été modifié avec succes</div>
+        <div class='alert alert-success'>Votre mot de passe à été modifié avec succes</div>
         <?php } ?>
 	<div>
-		<?php $user->genCompteUser();?>
+		<?php $user->genUpdatePwd();?>
 	</div>
 </div>

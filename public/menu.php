@@ -26,6 +26,7 @@
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="<?= $router->generate('mon-compte', array('id' => $_SESSION['id']))?>"><span class="fa fa-vcard-o"></span>&nbsp Mon compte</a></li>
+            <li><a class="dropdown-item" href="<?= $router->generate('modif-pass', array('id' => $_SESSION['id']))?>"><span class="fa fa-lock"></span>&nbsp Changer le mot de passe</a></li>
             <li><a class="dropdown-item" href=""> <span class="fa fa-sign-out"></span>&nbsp Se déconecter</a></li>
           </ul>
         </li>
