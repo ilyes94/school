@@ -3,7 +3,6 @@
 
     $titlePage = "Modifier mon mot de passe";
 
-
     @$id_utilisateur=$params['id'];
     $user->setIdUtilisateur($id_utilisateur);
     $success = false;
@@ -16,6 +15,7 @@
 
     if(!empty($_POST)){
         $hashPwd = hash ('sha256', $_POST['password']);
+        $user->setPwd($hashPwd);
         //Verification des champs
         if(empty($_POST['password'] && $_POST['confPassword'])){
             $error = true;
@@ -31,7 +31,7 @@
             $stmt = $conn->prepare("UPDATE utilisateur SET pwd = :pwd WHERE id_utilisateur = :id");
             $stmt->execute([
                 'id' => $user->getIdUtilisateur(),
-                'pwd' => $hashPwd
+                'pwd' => $user->getPwd()
             ]);
             $success = true;
         }

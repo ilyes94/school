@@ -1,6 +1,11 @@
 <?php
     $user = new User();
 
+    if($_SESSION['userType'] == 'Eléve'){
+        header('Location:'.$router->generate('dashboard'));
+        exit();
+    }
+
     $titlePage = "Modification d'un utilisateur";
 
     @$id_utilisateur=$params['id'];

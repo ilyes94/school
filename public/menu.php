@@ -22,12 +22,12 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          <span class="fa fa-user-circle-o"></span>&nbsp Role/nom 
+          <span class="fa fa-user-circle-o"></span>&nbsp <?= ucfirst($_SESSION['prenom']) ?> 
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="<?= $router->generate('mon-compte', array('id' => $_SESSION['id']))?>"><span class="fa fa-vcard-o"></span>&nbsp Mon compte</a></li>
             <li><a class="dropdown-item" href="<?= $router->generate('modif-pass', array('id' => $_SESSION['id']))?>"><span class="fa fa-lock"></span>&nbsp Changer le mot de passe</a></li>
-            <li><a class="dropdown-item" href=""> <span class="fa fa-sign-out"></span>&nbsp Se déconecter</a></li>
+            <li><a class="dropdown-item" href="<?= $router->generate('log-out')?>"> <span class="fa fa-sign-out"></span>&nbsp Se déconecter</a></li>
           </ul>
         </li>
       </ul>

@@ -10,7 +10,7 @@
     $error = false;
 
     if($_SESSION['id'] != $user->getIdUtilisateur()){
-        header('Location:'.$router->generate('home'));
+        header('Location:'.$router->generate('dashboard'));
         exit();
     }
 

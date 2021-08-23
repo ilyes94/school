@@ -15,11 +15,12 @@ if (session_status() === PHP_SESSION_NONE) {
 
 	$router->setBasePath($_SERVER['BASE_URI']);
 
-	$router->map('GET', '/' , 'home', 'home');
+	$router->map('GET|POST', '/' , 'log-in', 'log-in');
 	//Utilisateur
 	$router->map('GET|POST', '/dashboard', 'dashboard', 'dashboard');
 	$router->map('GET|POST', '/modif-user/[i:id]', 'modif-user', 'modif-user');
 	$router->map('GET|POST', '/ajout-utilisateur', 'ajout-utilisateur', 'ajout-utilisateur');
+	$router->map('GET', '/log-out', 'log-out', 'log-out');
 	//Compte
 	$router->map('GET|POST', '/mon-compte/[i:id]', 'mon-compte', 'mon-compte');
 	$router->map('GET|POST', '/modif-mot-de-passe/[i:id]', 'modif-pass', 'modif-pass');
@@ -37,6 +38,6 @@ if (session_status() === PHP_SESSION_NONE) {
 		require 'public/header.php';
 		require 'public/footer.php';
 	}else{
-		echo '404 not found';
+		echo '<h1>404 not found</h1>';
 	}
 ?>

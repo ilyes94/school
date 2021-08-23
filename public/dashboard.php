@@ -4,6 +4,10 @@
 	$success = false;
     $error = false;
 
+	if(!isset($_SESSION['userType'])){
+        header('Location:'.$router->generate('log-in'));
+    }
+
 	$titlePage = "Dashboard";
 	if(isset($_POST['delete'])){
 		$user->setIdUtilisateur($_POST['id_utilisateur']);
@@ -29,6 +33,6 @@
 		<?php $user->genUsers();?>
 	</div>
 </div>
-<?php if($_SESSION['userType'] =='admin'){?>
+<?php if($_SESSION['userType'] !='Eléve'){?>
 	<a class="btn btn-primary" href="<?=$router->generate('ajout-utilisateur')?>">Ajouter un utilisateur</a>
 <?php } ?>

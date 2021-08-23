@@ -194,7 +194,7 @@ class User{
         echo "<th>Prenom</th>";
         echo "<th>Role</th>";
         echo "<th>E-mail</th>";
-        if($_SESSION['userType'] =='admin'){
+        if($_SESSION['userType'] !='Eléve'){
             echo "<th>Modifier</th>";
             echo "<th>Supprimer</th>";
         }
@@ -205,11 +205,11 @@ class User{
             echo "<form action='' method='POST'>";	
             echo "<input type='hidden' value='". $row['id_utilisateur']."' name='id_utilisateur' />"; 
             echo "<td>".$row['id_utilisateur']."</td>";
-            echo "<td>".$row['nom']."</td>";
-            echo "<td>".$row['prenom']."</td>";
+            echo "<td>".ucfirst($row['nom'])."</td>";
+            echo "<td>".ucfirst($row['prenom'])."</td>";
             echo "<td>".$row['role']."</td>";
             echo "<td>".$row['email']."</td>";
-            if($_SESSION['userType'] =='admin'){
+            if($_SESSION['userType'] !='Eléve'){
                 echo "<td><a href='modif-user/".$row['id_utilisateur']."' class='btn btn-info'>Modifier</a></td>";
                 echo "<td><a href='#' class='btn btn-danger' data-toggle='modal' data-target='#smallModal".$row['id_utilisateur']."'>Supprimer</a></td>";
             }
@@ -350,6 +350,20 @@ class User{
     
         $stmt=$conn->prepare("select * from $this->db_table where email=? limit 1");
         $stmt->execute([$email]);
+        $tab=$stmt->fetch();
+        return $tab;
+
+        $conn=null;
+        $stmt=null;
+    }
+
+    public function sqlVerifLoginPwd($login, $pwd){
+        $database = new Database();
+        $conn = $database->getConnection();
+    
+        $stmt=$conn->prepare("select * from $this->db_table where login=? and pwd=? limit 1");
+        $stmt->execute(array($login, $pwd));
+        
         $tab=$stmt->fetch();
         return $tab;
 
