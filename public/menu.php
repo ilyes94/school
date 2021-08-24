@@ -7,6 +7,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <!-- Utilisateurs -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
           Utilisateurs
@@ -16,8 +17,17 @@
             <li><a class="dropdown-item" href="<?= $router->generate('ajout-utilisateur')?>">Ajouter un utilisateur</a></li>
           </ul>
         </li>
+        <!-- Eleves -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Eléves
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="<?= $router->generate('liste-eleves')?>">Liste des éléves</a></li>
+            <li><a class="dropdown-item" href="<?= $router->generate('ajout-eleve')?>">Ajouter un éléve</a></li>
+          </ul>
+        </li>
       </ul>
-
       <form class="d-flex">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item dropdown">
