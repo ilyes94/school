@@ -3,7 +3,14 @@
 
     $success = false;
     $error = false;
-    
+    //suppression
+    if(isset($_POST['delete'])){
+        $user = new User();
+        $eleve->setId_eleve($_POST['id_eleve']);
+		$del = $user->sqlDeleteUser($eleve->getId_eleve());
+		$success = true;
+	}
+
     $titlePage = "Liste des eleves";
 
     if(isset($_GET['annee_scolaire'])){
@@ -58,5 +65,5 @@
 <?php if ($success == true){ ?>
 	<div class='alert alert-success'>L'éléve à été supprimer</div>
 <?php } ?>
-<?php $eleve->genEleves();?>
+    <?php $eleve->genEleves();?>
 <a class="btn btn-primary" href="<?=$router->generate('ajout-eleve')?>">Ajouter un éléve</a>

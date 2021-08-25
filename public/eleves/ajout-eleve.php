@@ -9,37 +9,36 @@
 
     $success = false;
     $error = false;
-    //var_dump($_POST);
     
     if(!empty($_POST)){
-        //var_dump($_POST);
-        $eleve = new Eleve();
-        $eleve->setSexe($_POST['sexe']);
-        $eleve->setNom($_POST['nom']);
-        $eleve->setPrenom($_POST['prenom']);
-        $eleve->setEmail($_POST['email']);
-        $eleve->setTel($_POST['tel']);
-        $eleve->setAdresse($_POST['adresse']);
-        $eleve->setVille($_POST['ville']);
-        $eleve->setCp($_POST['cp']);
-        $eleve->setDate_naissance($_POST['date_naissance']);
-        $eleve->setLieu_naissance($_POST['lieu_naissance']);
-        $eleve->setClasse($_POST['classe']);
-        $eleve->setAnne_scolaire($_POST['annee_scolaire']);
-        $eleve->setDate_insciption($_POST['date_inscription']);
+        
         //Verification du formulaire
         if(empty($_POST['sexe'] && $_POST['nom'] && $_POST['prenom'] && $_POST['email'] && $_POST['tel'] && $_POST['adresse'] && $_POST['ville'] && $_POST['ville'] && $_POST['cp'] && $_POST['date_naissance'] && $_POST['lieu_naissance'] && $_POST['classe'] && $_POST['annee_scolaire'] && $_POST['date_inscription'])){
             $error = true;
             $message = 'Veuillez remplir tout les champs ';
         }
         //Verification de l'email
+        $eleve = new Eleve();
+        $eleve->setEmail($_POST['email']);
         $user = new User();
         $tab = $user->sqlVerifEmail($eleve->getEmail());
         if($tab){
             $error = true;
             $message = "L'adresse e-mail existe déjà";
         }else{
-            
+            $eleve->setSexe($_POST['sexe']);
+            $eleve->setNom($_POST['nom']);
+            $eleve->setPrenom($_POST['prenom']);
+            $eleve->setTel($_POST['tel']);
+            $eleve->setAdresse($_POST['adresse']);
+            $eleve->setVille($_POST['ville']);
+            $eleve->setCp($_POST['cp']);
+            $eleve->setDate_naissance($_POST['date_naissance']);
+            $eleve->setLieu_naissance($_POST['lieu_naissance']);
+            $eleve->setClasse($_POST['classe']);
+            $eleve->setAnne_scolaire($_POST['annee_scolaire']);
+            $eleve->setDate_insciption($_POST['date_inscription']);
+
             $database = new Database();
             $conn = $database->getConnection();
             //CREATION DE l'eleve en Utilisateur

@@ -30,6 +30,7 @@ if (session_status() === PHP_SESSION_NONE) {
 	//Eleve
 	$router->map('GET|POST', '/liste-eleves', 'eleves/liste-eleves', 'liste-eleves');
 	$router->map('GET|POST', '/ajout-eleve', 'eleves/ajout-eleve', 'ajout-eleve');
+	$router->map('GET|POST', '/modif-eleve/[i:id]', 'eleves/modif-eleve', 'modif-eleve');
 
 	$match = $router->match();
 	if(is_array($match)){

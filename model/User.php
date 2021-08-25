@@ -258,7 +258,7 @@ class User{
                 echo "<label class='label-control'>E-mail</label>";
                 echo "<input type='text' name='email' id='email' class='form-control' value=".$row['email']." required>";
             echo "</div>";
-            if($_SESSION['userType'] =='admin'){
+            if($_SESSION['userType'] =='Directeur'){
                 echo "<div class='form-group'>";
                     echo "<label class='label-control'>Role</label>";
                     echo "<select class='form-control' name='role'>";
@@ -269,6 +269,10 @@ class User{
                         echo "<option ";
                         if($row['role']=='Directeur') {echo 'selected ';} 
                         echo ">Directeur</option>";
+
+                        echo "<option ";
+                        if($row['role']=='Eléve') {echo 'selected ';} 
+                        echo ">Eléve</option>";
                     echo "</select>";
                 echo "</div>";
             }

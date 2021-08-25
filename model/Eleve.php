@@ -328,8 +328,8 @@ class Eleve{
             echo "<td>".ucfirst($row['prenom'])."</td>";
             echo "<td>".$row['classe']."</td>";
             echo "<td>".$row['annee_scolaire']."</td>";
-            echo "<td><a href='attestation-user/".$row['id_eleve']."' class='btn btn-success'>Attestation</a></td>";
-            echo "<td><a href='modif-user/".$row['id_eleve']."' class='btn btn-info'>Modifier</a></td>";
+            echo "<td><a href='attestation-eleve/".$row['id_eleve']."' class='btn btn-success'>Attestation</a></td>";
+            echo "<td><a href='modif-eleve/".$row['id_eleve']."' class='btn btn-info'>Modifier</a></td>";
             echo "<td><a href='#' class='btn btn-danger' data-toggle='modal' data-target='#smallModal".$row['id_eleve']."'>Supprimer</a></td>";
             
             echo "</tr>";
@@ -354,6 +354,61 @@ class Eleve{
         echo "</tbody></table>";
     }
 
+    function genSingleEleve(){
+        $stmt = $this->getSqlSingleEleveByID($this->id_eleve);
+
+        $row = $stmt->execute();
+        $row = $stmt->fetch();
+
+        echo "<form class='form' action='' method='post'>";
+        echo "<input type='hidden' value='". $row['id_eleve']."' name='id_eleve' />";
+            echo "<div class='form-group'>";
+                echo "<label class='label-control'>Nom</label>";
+                echo "<input type='text' name='nom' id='nom' class='form-control' value='".$row['nom']."' disabled required>";
+            echo "</div>";
+            echo "<div class='form-group'>";
+                echo "<label class='label-control'>Prenom</label>";
+                echo "<input type='text' name='prenom' id='prenom' class='form-control' value='".$row['prenom']."' disabled required>";
+            echo "</div>";
+            echo "<div class='form-group'>";
+                echo "<label class='label-control'>E-mail</label>";
+                echo "<input type='text' name='email' id='email' class='form-control' value='".$row['email']."' required>";
+            echo "</div>";
+            echo "<div class='form-group'>";
+                echo "<label class='label-control'>Télephone</label>";
+                echo "<input type='text' name='tel' id='tel' class='form-control' value='".$row['tel']."' required>";
+            echo "</div>";
+            echo "<div class='form-group'>";
+                echo "<label class='label-control'>Adresse</label>";
+                echo "<input type='text' name='adresse' id='adresse' class='form-control' value='".$row["adresse"]."' required>";
+            echo "</div>";
+            echo "<div class='form-group'>";
+                echo "<label class='label-control'>Ville</label>";
+                echo "<input type='text' name='ville' id='ville' class='form-control' value='".$row['ville']."' required>";
+            echo "</div>";
+            echo "<div class='form-group'>";
+                echo "<label class='label-control'>Code postal</label>";
+                echo "<input type='text' name='cp' id='cp' class='form-control' value='".$row['cp']."' required>";
+            echo "</div>";
+            /*
+                echo "<div class='form-group'>";
+                    echo "<label class='label-control'>Role</label>";
+                    echo "<select class='form-control' name='role'>";
+                        echo "<option ";
+                        if($row['role']=='Secrétaire') {echo 'selected ';} 
+                        echo ">Secrétaire</option>";
+
+                        echo "<option ";
+                        if($row['role']=='Directeur') {echo 'selected ';} 
+                        echo ">Directeur</option>";
+                    echo "</select>";
+                echo "</div>";
+                */
+            echo "<input type='submit' name='update' value='Modifier' class='btn btn-success'>";
+        echo '</form>';
+    }
+
+
     public function getSqlEleves(){
         $database = new Database();
         $conn = $database->getConnection();
@@ -372,6 +427,23 @@ class Eleve{
         $conn=null;
         $stmt=null;
     }
+    public function getSqlSingleEleveByID(){
+        $database = new Database();
+        $conn = $database->getConnection();
+
+        $sqlQuery = "SELECT * FROM " .$this->db_tables[0].
+                    " INNER JOIN ".$this->db_tables[1].
+                    " ON eleve.id_eleve = scolarite.eleve_fk 
+                    WHERE id_eleve = $this->id_eleve";
+        
+        $stmt = $conn->prepare($sqlQuery);
+
+        $stmt->execute();
+        return $stmt;
+
+        $conn=null;
+        $stmt=null;
+    }
 
     public function getLastEleve(){
         $database = new Database();
@@ -382,6 +454,17 @@ class Eleve{
         $stmt->execute();
         $tab=$stmt->fetch();
         return $tab;
+
+        $conn=null;
+        $stmt=null;
+    }
+    public function sqlDeleteEleve($id_eleve){
+        $database = new Database();
+        $conn = $database->getConnection();
+
+        $stmt=$conn->prepare ("DELETE FROM ". $this->db_tables[0] ." WHERE id_eleve = $id_eleve");
+        $stmt->execute();
+        return $stmt;
 
         $conn=null;
         $stmt=null;
