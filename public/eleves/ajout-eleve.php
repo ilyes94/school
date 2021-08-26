@@ -29,7 +29,7 @@
             $eleve->setSexe($_POST['sexe']);
             $eleve->setNom($_POST['nom']);
             $eleve->setPrenom($_POST['prenom']);
-            $eleve->setTel($_POST['tel']);
+            $eleve->setTel(str_replace(' ', '', $_POST['tel']));
             $eleve->setAdresse($_POST['adresse']);
             $eleve->setVille($_POST['ville']);
             $eleve->setCp($_POST['cp']);
@@ -65,6 +65,10 @@
                 'role' =>$user->getRole()
             ]);
             //Creation de l'eleve
+            //Recuperation de l'id de la derniere inscription
+            $last_inscrtit = $user->getLastUser();
+            $eleve->setId_eleve($last_inscrtit['id_utilisateur']);
+
             $stmt = $conn->prepare("INSERT INTO eleve SET 
                                     sexe = :sexe, 
                                     nom = :nom, 
@@ -76,7 +80,8 @@
                                     cp = :cp,
                                     date_naissance = :date_naissance,
                                     lieu_naissance = :lieu_naissance,
-                                    date_inscription = :date_inscription");
+                                    date_inscription = :date_inscription,
+                                    utilisateur_fk = :utilisateur_fk");
             $stmt->execute([
                 'sexe' => $eleve->getSexe(),
                 'nom' => $eleve->getNom(),
@@ -88,16 +93,15 @@
                 'cp' =>$eleve->getCp(),
                 'date_naissance' =>$eleve->getDate_naissance(),
                 'lieu_naissance' =>$eleve->getLieu_naissance(),
-                'date_inscription' =>$eleve->getDate_insciption()
+                'date_inscription' =>$eleve->getDate_insciption(),
+                'utilisateur_fk' => $eleve->getId_eleve()
             ]);
             //INSERTION DANS SCOLARITE
-            $last_inscrtit = $eleve->getLastEleve();
-            $eleve->setId_eleve($last_inscrtit['id_eleve']);
 
             $stmt = $conn->prepare("INSERT INTO scolarite SET 
                                     annee_scolaire = :annee_scolaire, 
                                     eleve_fk = :eleve_fk, 
-                                    classe = :classe");
+                                    classe_fk = :classe");
             $stmt->execute([
                 'annee_scolaire' => $eleve->getAnne_scolaire(),
                 'eleve_fk' => $eleve->getId_eleve(),
@@ -129,7 +133,7 @@
 				<div class="row fieldset">					
 					<div class="col-sm-6 col-md-1">
 						<div class="form-check">
-							<input class="form-check-input" type="radio" name="sexe" value="M." id="flexRadioDefault1" <?php if(isset($_POST['sexe']) && $_POST['sexe']=='M.')echo 'checked'?>>
+							<input class="form-check-input" type="radio" name="sexe" value="M" id="flexRadioDefault1" <?php if(isset($_POST['sexe']) && $_POST['sexe']=='M.')echo 'checked'?>>
 							<label class="form-check-label" for="flexRadioDefault1">
 								M.
 							</label>
@@ -186,10 +190,10 @@
             <div class="form-group">
                 <label> Classe: </label>								
                 <select class="form-control" name="classe">
-                    <option value="6éme">6éme</option>							
-                    <option value="5éme">5éme</option>
-                    <option value="4éme">4éme</option>
-                    <option value="3éme">3éme</option>						
+                    <option value="1">6éme</option>							
+                    <option value="2">5éme</option>
+                    <option value="3">4éme</option>
+                    <option value="4">3éme</option>						
                 </select>
             </div>
             <div class="form-group">

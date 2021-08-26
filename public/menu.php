@@ -1,7 +1,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand">School</a>
+    <a class="navbar-brand"><img src="<?=$_SESSION['root']?>/assets/img/logo.png" width="50%" alt=""></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -25,6 +25,15 @@
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="<?= $router->generate('liste-eleves')?>">Liste des éléves</a></li>
             <li><a class="dropdown-item" href="<?= $router->generate('ajout-eleve')?>">Ajouter un éléve</a></li>
+          </ul>
+        </li>
+        <!-- Controles -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Controles
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="<?= $router->generate('liste-controles')?>">Liste des controles</a></li>
           </ul>
         </li>
       </ul>

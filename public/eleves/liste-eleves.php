@@ -13,17 +13,29 @@
 
     $titlePage = "Liste des eleves";
 
+
+    //Filtres
     if(isset($_GET['annee_scolaire'])){
         $annee_scolaire=$_GET['annee_scolaire'];
     }else{
 		$annee_scolaire=annee_scolaire_actuelle();
     }
-		if(isset($_GET['search'])){
-            $search=$_GET['search'];
-        }	
-		else{
-            $search="";
-        }		
+
+    if(isset($_GET['classe'])){
+        $classe=$_GET['classe'];
+    }else{
+		$classe=0;
+    }
+
+
+	if(isset($_GET['search'])){
+        $search=$_GET['search'];
+    }	
+	else{
+        $search="";
+    }
+    //requete
+
 ?>
 
 <h1> Liste des eleves </h1>
@@ -48,7 +60,10 @@
                 
 
                 <label> Classe: </label>								
-                <select class="form-control mx-2" name="classe"	>
+                <select class="form-control mx-2" 
+                    name="classe"
+                    onChange="this.form.submit();">
+                    <option value="0">Toute les classes</option>
                     <option value="6éme">6éme</option>							
                     <option value="5éme">5éme</option>
                     <option value="4éme">4éme</option>
@@ -56,7 +71,7 @@
                 </select>
                 
             <input type="text" name="search" value="<?php echo $search ?>" class="form-control" placeholder="Nom ou prénom">
-            <button class="btn btn-primary"><span class="fa fa-search"></span> Rechercher</button>
+            <button class="btn btn-primary mx-2"><span class="fa fa-search"></span> Rechercher</button>
         </form>
     </div>
 </div>
@@ -65,5 +80,11 @@
 <?php if ($success == true){ ?>
 	<div class='alert alert-success'>L'éléve à été supprimer</div>
 <?php } ?>
-    <?php $eleve->genEleves();?>
-<a class="btn btn-primary" href="<?=$router->generate('ajout-eleve')?>">Ajouter un éléve</a>
+    <?php if(isset($_GET['search'])){
+        $eleve->genEleves(1,$search,$classe,$annee_scolaire);
+    }else{
+        $eleve->genEleves(0,$search,$classe,$annee_scolaire);
+
+    }
+        ?>
+        <a class="btn btn-primary" href="<?=$router->generate('ajout-eleve')?>">Ajouter un éléve</a>

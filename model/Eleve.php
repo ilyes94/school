@@ -301,17 +301,23 @@ class Eleve{
     private $db_tables = [
         "eleve",
         "scolarite",
-        "utilisateur"
+        "classe"
     ];
 
-    function genEleves(){
+    function genEleves($i,$search,$classe,$annee_scolaire){
+        if ($i == 1){
+            $stmt = $this->getSqlSearch($search,$classe,$annee_scolaire);
+        }else{
+            $stmt = $this->getSqlEleves();
+        }
         
-        $stmt = $this->getSqlEleves();
 
         echo "<table class='table table-striped table-bordered'><thead><tr>";
         echo "<th>ID</th>";
         echo "<th>Nom</th>";
         echo "<th>Prenom</th>";
+        echo "<th>E-mail</th>";
+        echo "<th>Télephone</th>";
         echo "<th>Classe</th>";
         echo "<th>Année scolaire</th>";
         echo "<th>Attestation</th>";
@@ -326,12 +332,14 @@ class Eleve{
             echo "<td>".$row['id_eleve']."</td>";
             echo "<td>".ucfirst($row['nom'])."</td>";
             echo "<td>".ucfirst($row['prenom'])."</td>";
-            echo "<td>".$row['classe']."</td>";
+            echo "<td>".$row['email']."</td>";
+            echo "<td>".chunk_split($row['tel'],2, ' ')."</td>";
+            echo "<td>".$row['nom_classe']."</td>";
             echo "<td>".$row['annee_scolaire']."</td>";
-            echo "<td><a href='attestation-eleve/".$row['id_eleve']."' class='btn btn-success'>Attestation</a></td>";
+            echo "<td><a href='".$_SESSION['root']."/public/eleves/attestation-eleve.php?id=".$row['id_eleve']."' class='btn btn-success'>Attestation</a></td>";
             echo "<td><a href='modif-eleve/".$row['id_eleve']."' class='btn btn-info'>Modifier</a></td>";
             echo "<td><a href='#' class='btn btn-danger' data-toggle='modal' data-target='#smallModal".$row['id_eleve']."'>Supprimer</a></td>";
-            
+        
             echo "</tr>";
             echo "<div class='modal' id='smallModal".$row['id_eleve']."' tabindex='-1' role='dialog' aria-labelledby='smallModal' aria-hidden='true'>";
 						echo "<div class='modal-dialog'>";
@@ -416,9 +424,41 @@ class Eleve{
         $sqlQuery = "SELECT * FROM "
                     .$this->db_tables[0].
                     " INNER JOIN ".$this->db_tables[1].
-                    " ON eleve.id_eleve = scolarite.eleve_fk";
+                    " ON eleve.id_eleve = scolarite.eleve_fk ".
+                    " INNER JOIN ".$this->db_tables[2]. 
+                    " ON classe.id_classe = scolarite.classe_fk ";
 
          
+        $stmt = $conn->prepare($sqlQuery);              
+        
+        $stmt->execute();
+        return $stmt;
+
+        $conn=null;
+        $stmt=null;
+    }
+
+    public function getSqlSearch($search,$classe,$annee_scolaire){
+        $database = new Database();
+        $conn = $database->getConnection();
+
+        if($classe==0){
+			$rClasse=""; 
+        }
+		else{//$index_filiere!=0: La requete doit prendre en compte la filière séléctionnée
+            $rClasse=" AND classe.nom_classe='$classe' ";
+        } 
+
+        $sqlQuery = "SELECT * FROM "
+                    .$this->db_tables[0].
+                    " INNER JOIN ".$this->db_tables[1].
+                    " ON eleve.id_eleve = scolarite.eleve_fk ".
+                    " INNER JOIN ".$this->db_tables[2]. 
+                    " ON classe.id_classe = scolarite.classe_fk 
+                    WHERE (nom like '%$search%' OR prenom like '%$search%')
+                    $rClasse
+                    AND annee_scolaire='$annee_scolaire'";
+
         $stmt = $conn->prepare($sqlQuery);              
         
         $stmt->execute();
@@ -431,9 +471,12 @@ class Eleve{
         $database = new Database();
         $conn = $database->getConnection();
 
-        $sqlQuery = "SELECT * FROM " .$this->db_tables[0].
+        $sqlQuery = "SELECT * FROM "
+                    .$this->db_tables[0].
                     " INNER JOIN ".$this->db_tables[1].
-                    " ON eleve.id_eleve = scolarite.eleve_fk 
+                    " ON eleve.id_eleve = scolarite.eleve_fk ".
+                    " INNER JOIN ".$this->db_tables[2]. 
+                    " ON classe.id_classe = scolarite.classe_fk 
                     WHERE id_eleve = $this->id_eleve";
         
         $stmt = $conn->prepare($sqlQuery);
@@ -445,19 +488,6 @@ class Eleve{
         $stmt=null;
     }
 
-    public function getLastEleve(){
-        $database = new Database();
-        $conn = $database->getConnection();
-
-        $stmt=$conn->prepare("SELECT id_eleve FROM " .$this->db_tables[0]." ORDER BY id_eleve desc limit 1 ");
-
-        $stmt->execute();
-        $tab=$stmt->fetch();
-        return $tab;
-
-        $conn=null;
-        $stmt=null;
-    }
     public function sqlDeleteEleve($id_eleve){
         $database = new Database();
         $conn = $database->getConnection();

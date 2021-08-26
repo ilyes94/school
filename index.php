@@ -5,6 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
 	require './altorouter/AltoRouter.php';
 	$uri = $_SERVER['REQUEST_URI'];
 
+
 	//fonctions
 	include __DIR__ . '/public/function.php';
 
@@ -31,6 +32,9 @@ if (session_status() === PHP_SESSION_NONE) {
 	$router->map('GET|POST', '/liste-eleves', 'eleves/liste-eleves', 'liste-eleves');
 	$router->map('GET|POST', '/ajout-eleve', 'eleves/ajout-eleve', 'ajout-eleve');
 	$router->map('GET|POST', '/modif-eleve/[i:id]', 'eleves/modif-eleve', 'modif-eleve');
+
+	//controle
+	$router->map('GET|POST', '/liste-controles', 'controle/liste-controles', 'liste-controles');
 
 	$match = $router->match();
 	if(is_array($match)){

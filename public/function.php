@@ -42,3 +42,10 @@ function les_annee_scolaire($annee_debut = 2020)
     return $les_annees;
 
 }
+
+function dateEnToDateFr($dateEn)
+{
+    //$dateEn='2019-02-26';
+    return substr($dateEn, 8, 2) . "/" . substr($dateEn, 5, 2) . "/" . substr($dateEn, 0, 4);
+    // Result: '26/02/2019'
+}

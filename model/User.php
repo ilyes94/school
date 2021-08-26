@@ -399,6 +399,19 @@ class User{
         $conn=null;
         $stmt=null;
     }
+    public function getLastUser(){
+        $database = new Database();
+        $conn = $database->getConnection();
+
+        $stmt=$conn->prepare("SELECT id_utilisateur FROM " .$this->db_table." ORDER BY id_utilisateur desc limit 1 ");
+
+        $stmt->execute();
+        $tab=$stmt->fetch();
+        return $tab;
+
+        $conn=null;
+        $stmt=null;
+    }
 
 }
 ?>
