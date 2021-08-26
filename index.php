@@ -12,6 +12,7 @@ if (session_status() === PHP_SESSION_NONE) {
 	// models
 	include __DIR__ . '/model/User.php';
 	include __DIR__ . '/model/Eleve.php';
+	include __DIR__ . '/model/Controle.php';
 
 	$router = new AltoRouter();
 
@@ -35,6 +36,9 @@ if (session_status() === PHP_SESSION_NONE) {
 
 	//controle
 	$router->map('GET|POST', '/liste-controles', 'controle/liste-controles', 'liste-controles');
+	$router->map('GET|POST', '/ajout-controle', 'controle/ajout-controle', 'ajout-controle');
+	$router->map('GET|POST', '/modif-controle/[i:id]', 'controle/modif-controle', 'modif-controle');
+	$router->map('GET|POST', '/ajout-note/[i:id]', 'controle/ajout-note', 'ajout-note');
 
 	$match = $router->match();
 	if(is_array($match)){
