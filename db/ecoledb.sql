@@ -34,7 +34,8 @@ CREATE TABLE eleve (
 
 CREATE TABLE classe(
 	id_classe int not null auto_increment primary key,
-	nom_classe varchar(50) 
+	nom_classe varchar(50),
+	annee_scolaire_classe varchar(50)
 	);
 
 CREATE TABLE scolarite(
@@ -54,7 +55,7 @@ CREATE TABLE controle(
 	id_controle int not null auto_increment primary key,
 	classe_fk int,
 	matiere varchar(50),
-	date varchar(50) 
+	date_controle varchar(50) 
 	);
 		
 	alter table controle add constraint foreign key(classe_fk) 
@@ -77,7 +78,11 @@ CREATE TABLE note_controle(
 
 INSERT INTO `utilisateur` (`id_utilisateur`,`nom`, `prenom`,`login`,`pwd`,`role`,`email`) VALUES 
  	(1,'Pog','Champ','admin','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3','Directeur','admin@gmail.com'),
- 	(2,'Okay','Champ','sec','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3','Secrétaire','sec1@gmail.com');
+ 	(2,'Okay','Champ','sec','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3','Secrétaire','sec1@gmail.com'),
+	(3,'Damiri','Hind1','Damiri1','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'Eléve','hind1@gmail.com'),
+	(4,'Damiri','Hind2','Damiri2','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'Eléve','hind2@gmail.com'),
+	(5,'Damiri','Hind3','Damiri3','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'Eléve','hind3@gmail.com');
+
 			 
 INSERT INTO `eleve` (`id_eleve`,`sexe`,`nom`,`prenom`, `email`,`date_naissance`,`lieu_naissance`,`adresse`,`ville`,`cp`,`tel`,`date_inscription`) VALUES
 	( 1,'Mme','Damiri','Hind','hind@gmail.com', '1997-11-21','Paris','154 Imlil','Paris','75000','0666222344', '2020-10-05'),
@@ -86,18 +91,25 @@ INSERT INTO `eleve` (`id_eleve`,`sexe`,`nom`,`prenom`, `email`,`date_naissance`,
 	( 4,'Mme','Damiri','Hind2','hind2@gmail.com', '1997-11-21','Paris','154 Imlil','Paris','75000','0666222344', '2020-10-05'),
 	( 5,'Mme','Damiri','Hind3','hind3@gmail.com', '1997-11-21','Paris','154 Imlil','Paris','75000','0666222344', '2020-10-05');
 
-INSERT INTO `classe`(`id_classe`,`nom_classe`) VALUES
-	(null,'6éme'),
-	(null,'5éme'),
-	(null,'4éme'),
-	(null,'3éme');
+INSERT INTO `classe`(`id_classe`,`nom_classe`,`annee_scolaire_classe`) VALUES
+	(null,'6éme A','2020/2021'),
+	(null,'5éme A','2020/2021'),
+	(null,'4éme A','2020/2021'),
+	(null,'3éme A','2020/2021'),
+	(null,'6éme B','2021/2022'),
+	(null,'5éme B','2021/2022'),
+	(null,'4éme B','2021/2022'),
+	(null,'3éme B','2021/2022');
 
 INSERT INTO `scolarite`(`id_scolarite`,`annee_scolaire`,`eleve_fk`,`classe_fk`) VALUES
 	(null,'2020/2021',1,1),
-	(null,'2020/2021',2,2);
+	(null,'2021/2022',2,6),
+	(null,'2020/2021',3,1),
+	(null,'2020/2021',4,1),
+	(null,'2020/2021',5,1);
 
-INSERT INTO `controle`(`id_controle`,`classe_fk`,`matiere`,`date`) VALUES
-	(null,1,'Math','2020-10-05'),
+INSERT INTO `controle`(`id_controle`,`classe_fk`,`matiere`,`date_controle`) VALUES
+	(null,1,'Mathématiques','2020-10-05'),
 	(null,1,'Physiques','2020-10-05');
 
 INSERT INTO `note_controle`(`id_note_controle`,`controle_fk`,`eleve_fk`,`absence`,`note`) VALUES

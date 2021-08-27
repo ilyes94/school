@@ -5,7 +5,11 @@
 
     $success = false;
     $error = false;
-
+    if(isset($_POST['delete'])){
+        $controle->setId_controle($_POST['id_controle']);
+		$del = $controle->sqlDeleteControle($controle->getId_controle());
+		$success = true;
+	}
 
 ?>
 <h1>Liste des controles</h1>

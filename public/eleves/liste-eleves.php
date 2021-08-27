@@ -1,4 +1,8 @@
 <?php
+    $classe = new Classe();
+    $sqlAllClasse = $classe->getAllClasse();
+    $allClasse = $sqlAllClasse->fetchAll();
+
     $eleve = new Eleve();
 
     $success = false;
@@ -64,10 +68,10 @@
                     name="classe"
                     onChange="this.form.submit();">
                     <option value="0">Toute les classes</option>
-                    <option value="6éme">6éme</option>							
-                    <option value="5éme">5éme</option>
-                    <option value="4éme">4éme</option>
-                    <option value="3éme">3éme</option>						
+                    <?php foreach($allClasse as $clas){?>
+                    <option value="<?=$clas['nom_classe']?>">
+                    <?=$clas['nom_classe']?></option>	
+                    <?php } ?>						
                 </select>
                 
             <input type="text" name="search" value="<?php echo $search ?>" class="form-control" placeholder="Nom ou prénom">

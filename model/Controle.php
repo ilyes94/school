@@ -177,7 +177,7 @@ class Controle{
             echo "<td>".$row['id_controle']."</td>";
             echo "<td>".$row['nom_classe']."</td>";
             echo "<td>".$row['matiere']."</td>";
-            echo "<td>". dateEnToDateFr($row['date'])."</td>";
+            echo "<td>". dateEnToDateFr($row['date_controle'])."</td>";
             echo "<td><a href='modif-controle/".$row['id_controle']."' class='btn btn-success'>Modifier notes</a></td>";
             echo "<td><a href='ajout-note/".$row['id_controle']."' class='btn btn-info'>Ajouter</a></td>";
             echo "<td><a href='#' class='btn btn-danger' data-toggle='modal' data-target='#smallModal".$row['id_controle']."'>Supprimer</a></td>";
@@ -189,7 +189,7 @@ class Controle{
 									echo "<h5 class='modal-title' id='myModalLabel'>Confirmation</h5>";
 									echo "</div>";
 									echo "<div class='modal-body'>";
-										echo "<p>Confirmez la suppression du contrôle de <b>".ucfirst($row['matiere']). ' du '.dateEnToDateFr($row['date'])."</b><p>";
+										echo "<p>Confirmez la suppression du contrôle de <b>".ucfirst($row['matiere']). ' du '.dateEnToDateFr($row['date_controle'])."</b><p>";
 									echo "</div>";
 									echo "<div class='modal-footer'>";
 										echo "<button type='button' class='btn btn-secondary' data-dismiss='modal'>Annuler</button>";
@@ -221,7 +221,7 @@ class Controle{
                 echo "<td><input class='form-control' type='text' disabled value='". $row['id_eleve']."' name='id_eleve".$row['id_eleve']."'/></td>";
                 echo "<td><input class='form-control' type='text' disabled value='". $row['nom']."' name='nom".$row['id_eleve']."'/></td>";
                 echo "<td><input class='form-control' type='text' disabled value='". $row['prenom']."' name='prenom".$row['id_eleve']."'/></td>";
-                    echo "<td><input class='form-check-input' type='checkbox'";
+                    echo "<td><input class='form-check-input' disabled type='checkbox'";
                     if($row['absence'] == true){echo ' checked ';}
                     echo  " name='abs[]' value='".$row['id_eleve']." '></td>";
                 echo "<td><input class='form-control' type='text' required name='notes[]' value='".$row['note']."'/></td>";
@@ -277,5 +277,15 @@ class Controle{
         $stmt=null;
     }
 
+    public function sqlDeleteControle($id_controle){
+        $database = new Database();
+        $conn = $database->getConnection();
 
+        $stmt=$conn->prepare ("DELETE FROM ". $this->db_tables[0] ." WHERE id_controle = $id_controle");
+        $stmt->execute();
+        return $stmt;
+
+        $conn=null;
+        $stmt=null;
+    }
 }

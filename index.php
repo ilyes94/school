@@ -13,6 +13,7 @@ if (session_status() === PHP_SESSION_NONE) {
 	include __DIR__ . '/model/User.php';
 	include __DIR__ . '/model/Eleve.php';
 	include __DIR__ . '/model/Controle.php';
+	include __DIR__ . '/model/Classe.php';
 
 	$router = new AltoRouter();
 

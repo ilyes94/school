@@ -4,6 +4,10 @@
     }else{
         $annee_scolaire=annee_scolaire_actuelle();
     }
+
+    $classe = new Classe();
+    $sqlAllClasse = $classe->getAllClasse();
+    $allClasse = $sqlAllClasse->fetchAll();
     
     $titlePage = "Ajouter un éléve";
 
@@ -188,12 +192,12 @@
                 <label for="floatingInput">Ville de naissance</label>    
             </div>
             <div class="form-group">
-                <label> Classe: </label>								
+                <label class="font-weight-bold"> Classe : </label>								
                 <select class="form-control" name="classe">
-                    <option value="1">6éme</option>							
-                    <option value="2">5éme</option>
-                    <option value="3">4éme</option>
-                    <option value="4">3éme</option>						
+                <?php foreach($allClasse as $classe){?>
+                    <option value="<?=$classe['id_classe']?>">
+                    <?=$classe['nom_classe'].' '.$classe['annee_scolaire_classe']?></option>	
+                <?php } ?>				
                 </select>
             </div>
             <div class="form-group">

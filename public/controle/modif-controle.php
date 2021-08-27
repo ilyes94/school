@@ -28,10 +28,8 @@
                 $database = new Database();
                 $conn = $database->getConnection();
                 //Gerer les absences
-                
                 if(isset($_POST['abs'][$i])) {
                     $controle->setAbsence($_POST['abs'][$i]);
-                    
                     $stmt = $conn->prepare("UPDATE note_controle SET
                                             absence = :absence
                                             WHERE eleve_fk = :eleve_fk AND controle_fk = :controle_fk ");
@@ -42,7 +40,7 @@
                         'absence' => true
                     ]);
                 }
-                
+
                 $controle->setNote($_POST['notes'][$i]);
                 $controle->setEleve($_POST['id_eleve'][$i]);
 
@@ -63,7 +61,7 @@
 <div class="jumbotron">
 	<h1>Modifiaction des notes</h1>
     <p class="box-return"><a href="<?= $router->generate('liste-controles')?>"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i>
-    <u>Retour à la liste des éléves</u></a></p>
+    <u>Retour à la liste des contrôles</u></a></p>
     <?php if($error == true){?>
         <div class='alert alert-danger'><?=$message?></div>
     <?php } elseif ($success == true){ ?>

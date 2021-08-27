@@ -34,6 +34,7 @@
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="<?= $router->generate('liste-controles')?>">Liste des controles</a></li>
+            <li><a class="dropdown-item" href="<?= $router->generate('ajout-controle')?>">Ajouter un contrôle</a></li>
           </ul>
         </li>
       </ul>

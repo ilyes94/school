@@ -4,7 +4,6 @@
 
     $success = false;
     $error = false;
-    $page = basename(__FILE__);
     if(!empty($_POST)){
         //var_dump($_POST);
         $user = new User();

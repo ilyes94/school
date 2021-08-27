@@ -9,7 +9,10 @@
     $titlePage = "Ajout des notes";
 
     @$id_controle=$params['id'];
+    @$classe_controle=$params['classe'];
     $controle->setId_controle($id_controle);
+    $controle->setClasse($classe_controle);
+    echo $controle->getClasse();
     $success = false;
     $error = false;
     var_dump($_POST);
@@ -25,6 +28,6 @@
         <div class='alert alert-success'>Modifier avec succes</div>
         <?php } ?>
 	<div>
-        <?php $controle->genSingleControle();?>
+
 	</div>
 </div>
