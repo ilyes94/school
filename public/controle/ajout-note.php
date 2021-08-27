@@ -25,7 +25,7 @@
 <div class="jumbotron">
 	<h1>Ajout des notes</h1>
     <p class="box-return"><a href="<?= $router->generate('liste-controles')?>"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i>
-    <u>Retour à la liste des éléves</u></a></p>
+    <u>Retour à la liste des contrôles</u></a></p>
     <?php if($error == true){?>
         <div class='alert alert-danger'><?=$message?></div>
     <?php } elseif ($success == true){ ?>
