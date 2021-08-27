@@ -9,6 +9,7 @@ class Controle{
     private ?string $date;
     private ?string $eleve;
     private ?string $note;
+    private ?string $absence;
 
     /**
      * Get the value of id_controle
@@ -129,6 +130,25 @@ class Controle{
 
         return $this;
     }
+        /**
+     * Get the value of absence
+     */ 
+    public function getAbsence()
+    {
+        return $this->absence;
+    }
+
+    /**
+     * Set the value of absence
+     *
+     * @return  self
+     */ 
+    public function setAbsence($absence)
+    {
+        $this->absence = $absence;
+
+        return $this;
+    }
     // Tables
     private $db_tables = [
         "controle",
@@ -153,7 +173,7 @@ class Controle{
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
             echo "<form action='' method='POST'>";	
-            echo "<input type='hidden' value='". $row['id_controle']."' name='id_controle' />"; 
+            echo "<input type='hidden' value='". $row['id_controle']."' name='id_controle' />";
             echo "<td>".$row['id_controle']."</td>";
             echo "<td>".$row['nom_classe']."</td>";
             echo "<td>".$row['matiere']."</td>";
@@ -189,20 +209,27 @@ class Controle{
         echo "<th>Id Eleve</th>";
         echo "<th>Nom</th>";
         echo "<th>Prenom</th>";
+        echo "<th>Absence</th>";
         echo "<th>Note</th>";
-        echo "</tr></thead><form action='' method='POST'><tbody>";
+        echo "</tr></thead><tbody>";
+        echo "<form action='' method='POST'>";
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);	
             echo "<tr>";
-                echo "<input type='hidden' value='". $row['id_controle']."' name='id_controle' />"; 
+                echo "<input type='hidden' value='". $row['id_controle']."' name='id_controle' />";
+                echo "<input type='hidden' name='id_eleve[]' value='". $row['id_eleve']."' />";
                 echo "<td><input class='form-control' type='text' disabled value='". $row['id_eleve']."' name='id_eleve".$row['id_eleve']."'/></td>";
                 echo "<td><input class='form-control' type='text' disabled value='". $row['nom']."' name='nom".$row['id_eleve']."'/></td>";
                 echo "<td><input class='form-control' type='text' disabled value='". $row['prenom']."' name='prenom".$row['id_eleve']."'/></td>";
-                echo "<td><input class='form-control' type='text' value='". $row['note']."' name='note".$row['id_eleve']."'/></td>";
+                    echo "<td><input class='form-check-input' type='checkbox'";
+                    if($row['absence'] == true){echo ' checked ';}
+                    echo  " name='abs[]' value='".$row['id_eleve']." '></td>";
+                echo "<td><input class='form-control' type='text' required name='notes[]' value='".$row['note']."'/></td>";
             echo "</tr>";   
         }
         echo "<input type='submit' name='update' value='Modifier' class='btn btn-success'>";
-        echo "</tbody></form></table>";
+        echo "</form>";
+        echo "</tbody></table>";
         
     }
 
@@ -249,4 +276,6 @@ class Controle{
         $conn=null;
         $stmt=null;
     }
+
+
 }

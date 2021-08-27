@@ -64,7 +64,8 @@ CREATE TABLE note_controle(
 	id_note_controle int not null auto_increment primary key,
 	controle_fk int,
 	eleve_fk int,
-	note int 
+	absence boolean,
+	note varchar(50) 
 );
 
 	alter table note_controle add constraint foreign key(controle_fk) 
@@ -99,10 +100,10 @@ INSERT INTO `controle`(`id_controle`,`classe_fk`,`matiere`,`date`) VALUES
 	(null,1,'Math','2020-10-05'),
 	(null,1,'Physiques','2020-10-05');
 
-INSERT INTO `note_controle`(`id_note_controle`,`controle_fk`,`eleve_fk`,`note`) VALUES
-	(null,1,1,15),
-	(null,2,1,10),
-	(null,1,3,05),
-	(null,1,4,12),
-	(null,1,5,10);
+INSERT INTO `note_controle`(`id_note_controle`,`controle_fk`,`eleve_fk`,`absence`,`note`) VALUES
+	(null,1,1,0,15),
+	(null,2,1,0,10),
+	(null,1,3,0,5),
+	(null,1,4,1,0),
+	(null,1,5,0,10);
 	
