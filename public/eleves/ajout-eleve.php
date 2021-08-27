@@ -71,7 +71,7 @@
             //Creation de l'eleve
             //Recuperation de l'id de la derniere inscription
             $last_inscrtit = $user->getLastUser();
-            $eleve->setId_eleve($last_inscrtit['id_utilisateur']);
+            $user->setIdUtilisateur($last_inscrtit['id_utilisateur']);
 
             $stmt = $conn->prepare("INSERT INTO eleve SET 
                                     sexe = :sexe, 
@@ -98,18 +98,22 @@
                 'date_naissance' =>$eleve->getDate_naissance(),
                 'lieu_naissance' =>$eleve->getLieu_naissance(),
                 'date_inscription' =>$eleve->getDate_insciption(),
-                'utilisateur_fk' => $eleve->getId_eleve()
+                'utilisateur_fk' => $user->getIdUtilisateur()
             ]);
             //INSERTION DANS SCOLARITE
+            //recuperation du dernier eleve inscrit
+            $last_eleve = $eleve->getLastEleve();
+            $eleve->setId_eleve($last_eleve['id_eleve']);
 
             $stmt = $conn->prepare("INSERT INTO scolarite SET 
                                     annee_scolaire = :annee_scolaire, 
                                     eleve_fk = :eleve_fk, 
-                                    classe_fk = :classe");
+                                    classe_fk = :classe_fk");
+    
             $stmt->execute([
                 'annee_scolaire' => $eleve->getAnne_scolaire(),
                 'eleve_fk' => $eleve->getId_eleve(),
-                'classe' => $eleve->getClasse()
+                'classe_fk' => $eleve->getClasse()
             ]);
 
             $success = true;

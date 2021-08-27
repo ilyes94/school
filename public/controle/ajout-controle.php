@@ -25,7 +25,7 @@
 
     $titlePage = "Ajouter un contrôle";
 
-    var_dump($_POST);
+    //var_dump($_POST);
 
     $success = false;
     $error = false;

@@ -487,6 +487,19 @@ class Eleve{
         $conn=null;
         $stmt=null;
     }
+    public function getLastEleve(){
+        $database = new Database();
+        $conn = $database->getConnection();
+
+        $stmt=$conn->prepare("SELECT id_eleve FROM " .$this->db_tables[0]." ORDER BY id_eleve desc limit 1 ");
+
+        $stmt->execute();
+        $tab=$stmt->fetch();
+        return $tab;
+
+        $conn=null;
+        $stmt=null;
+    }
 
     public function sqlDeleteEleve($id_eleve){
         $database = new Database();

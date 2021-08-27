@@ -154,7 +154,8 @@ class Controle{
         "controle",
         "classe",
         "note_controle",
-        "eleve"
+        "eleve",
+        "scolarite"
     ];
 
     function genControles(){
@@ -202,6 +203,7 @@ class Controle{
         }
         echo "</tbody></table>";
     }
+
     function genSingleControle(){
         $stmt = $this->getSqlSingleControle($this->id_controle);
 
@@ -228,6 +230,36 @@ class Controle{
             echo "</tr>";   
         }
         echo "<input type='submit' name='update' value='Modifier' class='btn btn-success'>";
+        echo "</form>";
+        echo "</tbody></table>";
+        
+    }
+    
+    function genClasse(){
+        $stmt = $this->getSqlElevesByClasse($this->classe);
+        $id = $this->id_controle;
+
+        echo "<table class='table table-striped table-bordered'><thead><tr>";
+        echo "<th>Id Eleve</th>";
+        echo "<th>Nom</th>";
+        echo "<th>Prenom</th>";
+        echo "<th>Absence</th>";
+        echo "<th>Note</th>";
+        echo "</tr></thead><tbody>";
+        echo "<form action='' method='POST'>";
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            extract($row);	
+            echo "<tr>";
+                echo "<input type='hidden' value='".$id."' name='id_controle' />";
+                echo "<input type='hidden' name='id_eleve[]' value='". $row['id_eleve']."' />";
+                echo "<td><input class='form-control' type='text' disabled value='". $row['id_eleve']."' name='id_eleve".$row['id_eleve']."'/></td>";
+                echo "<td><input class='form-control' type='text' disabled value='". $row['nom']."' name='nom".$row['id_eleve']."'/></td>";
+                echo "<td><input class='form-control' type='text' disabled value='". $row['prenom']."' name='prenom".$row['id_eleve']."'/></td>";
+                echo "<td><input class='form-check-input' type='checkbox' name='abs[]' value=''></td>";
+                echo "<td><input class='form-control' type='text' required name='notes[]' value=''/></td>";
+            echo "</tr>";   
+        }
+        echo "<input type='submit' name='update' value='Enregistrer' class='btn btn-success'>";
         echo "</form>";
         echo "</tbody></table>";
         
@@ -272,6 +304,45 @@ class Controle{
         
         $stmt->execute();
         return $stmt;
+
+        $conn=null;
+        $stmt=null;
+    }
+
+    public function getSqlElevesByClasse(){
+        $database = new Database();
+        $conn = $database->getConnection();
+
+        $sqlQuery = "SELECT * FROM "
+                    .$this->db_tables[4].
+                    " INNER JOIN ".$this->db_tables[3].
+                    " ON eleve.id_eleve = scolarite.eleve_fk ".
+                    " INNER JOIN ".$this->db_tables[1]. 
+                    " ON classe.id_classe = scolarite.classe_fk 
+                    WHERE classe_fk=$this->classe";
+                    
+        $stmt = $conn->prepare($sqlQuery);              
+        
+        $stmt->execute();
+        return $stmt;
+
+        $conn=null;
+        $stmt=null;
+    }
+
+    public function getSqlClasseByControle(){
+        $database = new Database();
+        $conn = $database->getConnection();
+
+        $sqlQuery = "SELECT classe_fk FROM "
+                    .$this->db_tables[0].
+                    " WHERE id_controle=$this->id_controle";
+
+        $stmt = $conn->prepare($sqlQuery);              
+        
+        $stmt->execute();
+        $tab=$stmt->fetch();
+        return $tab;
 
         $conn=null;
         $stmt=null;

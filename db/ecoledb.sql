@@ -79,17 +79,19 @@ CREATE TABLE note_controle(
 INSERT INTO `utilisateur` (`id_utilisateur`,`nom`, `prenom`,`login`,`pwd`,`role`,`email`) VALUES 
  	(1,'Pog','Champ','admin','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3','Directeur','admin@gmail.com'),
  	(2,'Okay','Champ','sec','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3','Secrétaire','sec1@gmail.com'),
-	(3,'Damiri','Hind1','Damiri1','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'Eléve','hind1@gmail.com'),
-	(4,'Damiri','Hind2','Damiri2','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'Eléve','hind2@gmail.com'),
-	(5,'Damiri','Hind3','Damiri3','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'Eléve','hind3@gmail.com');
+	(3,'Damiri','Hind','Damiri','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'Eléve','hind@gmail.com'),
+	(4,'Kaftani','Souad','Souad1','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'Eléve','souad@gmail.com'),
+	(5,'Damiri','Hind1','Damiri1','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'Eléve','hind1@gmail.com'),
+	(6,'Damiri','Hind2','Damiri2','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'Eléve','hind2@gmail.com'),
+	(7,'Damiri','Hind3','Damiri3','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'Eléve','hind3@gmail.com');
 
 			 
-INSERT INTO `eleve` (`id_eleve`,`sexe`,`nom`,`prenom`, `email`,`date_naissance`,`lieu_naissance`,`adresse`,`ville`,`cp`,`tel`,`date_inscription`) VALUES
-	( 1,'Mme','Damiri','Hind','hind@gmail.com', '1997-11-21','Paris','154 Imlil','Paris','75000','0666222344', '2020-10-05'),
-	( 2,'Mme','Kaftani','Souad','souad@gmail.com','1998-02-25','Paris','120 Massira','Paris','75000','0644222322', '2020-10-05'),
-	( 3,'Mme','Damiri','Hind1','hind1@gmail.com', '1997-11-21','Paris','154 Imlil','Paris','75000','0666222344', '2020-10-05'),
-	( 4,'Mme','Damiri','Hind2','hind2@gmail.com', '1997-11-21','Paris','154 Imlil','Paris','75000','0666222344', '2020-10-05'),
-	( 5,'Mme','Damiri','Hind3','hind3@gmail.com', '1997-11-21','Paris','154 Imlil','Paris','75000','0666222344', '2020-10-05');
+INSERT INTO `eleve` (`id_eleve`,`sexe`,`nom`,`prenom`, `email`,`date_naissance`,`lieu_naissance`,`adresse`,`ville`,`cp`,`tel`,`date_inscription`,`utilisateur_fk`) VALUES
+	(1,'Mme','Damiri','Hind','hind@gmail.com', '1997-11-21','Paris','154 Imlil','Paris','75000','0666222344', '2020-10-05',3),
+	(2,'Mme','Kaftani','Souad','souad@gmail.com','1998-02-25','Paris','120 Massira','Paris','75000','0644222322', '2020-10-05',4),
+	(3,'Mme','Damiri','Hind1','hind1@gmail.com', '1997-11-21','Paris','154 Imlil','Paris','75000','0666222344', '2020-10-05',5),
+	(4,'Mme','Damiri','Hind2','hind2@gmail.com', '1997-11-21','Paris','154 Imlil','Paris','75000','0666222344', '2020-10-05',6),
+	(5,'Mme','Damiri','Hind3','hind3@gmail.com', '1997-11-21','Paris','154 Imlil','Paris','75000','0666222344', '2020-10-05',7);
 
 INSERT INTO `classe`(`id_classe`,`nom_classe`,`annee_scolaire_classe`) VALUES
 	(null,'6éme A','2020/2021'),

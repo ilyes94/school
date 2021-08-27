@@ -7,15 +7,19 @@
     }
 
     $titlePage = "Ajout des notes";
-
-    @$id_controle=$params['id'];
-    @$classe_controle=$params['classe'];
-    $controle->setId_controle($id_controle);
-    $controle->setClasse($classe_controle);
-    echo $controle->getClasse();
     $success = false;
     $error = false;
+
+    @$id_controle=$params['id'];
+    $controle->setId_controle($id_controle);
+    
     var_dump($_POST);
+
+    $classe = $controle->getSqlClasseByControle();
+    $controle->setClasse($classe['classe_fk']);
+
+    $eleves = $controle->getSqlElevesByClasse();
+    
 
 ?>
 <div class="jumbotron">
@@ -25,9 +29,9 @@
     <?php if($error == true){?>
         <div class='alert alert-danger'><?=$message?></div>
     <?php } elseif ($success == true){ ?>
-        <div class='alert alert-success'>Modifier avec succes</div>
+        <div class='alert alert-success'>Enregistrer avec succes</div>
         <?php } ?>
 	<div>
-
+       <?php $controle->genClasse(); ?>
 	</div>
 </div>
