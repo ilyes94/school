@@ -380,7 +380,7 @@ class User{
         $conn = $database->getConnection();
 
         $stmt=$conn->prepare("select role from $this->db_table where id_utilisateur = $id_utilisateur");
-        $stmt->execute([$id_utilisateur]);
+        $stmt->execute();
         $tab=$stmt->fetch();
         return $tab;
 

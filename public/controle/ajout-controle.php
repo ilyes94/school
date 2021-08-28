@@ -45,7 +45,10 @@
             $controle->setClasse($_POST['classe']);
             $controle->setMatiere($_POST['matiere']);
             $controle->setDate($_POST['date_controle']);
-            $stmt = $conn->prepare("INSERT INTO controle SET classe_fk = :classe_fk, matiere = :matiere, date_controle = :date_controle");
+            $stmt = $conn->prepare("INSERT INTO controle SET 
+                                    classe_fk = :classe_fk, 
+                                    matiere = :matiere, 
+                                    date_controle = :date_controle");
             $stmt->execute([
                 'classe_fk' => $controle->getClasse(),
                 'matiere' => $controle->getMatiere(),

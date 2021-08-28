@@ -159,8 +159,8 @@ class Controle{
     ];
 
     function genControles(){
-   
         $stmt = $this->getSqlAllControles();
+        
         echo "<table class='table table-striped table-bordered'><thead><tr>";
         echo "<th>ID</th>";
         echo "<th>Classe</th>";
@@ -173,14 +173,29 @@ class Controle{
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
+
+            $isNote = $this->sqlVerifNoteControle($row['id_controle']);
+            if($isNote != null){
+                $isNoted = true;
+            }else{
+                $isNoted = false;
+            }
+
             echo "<form action='' method='POST'>";	
             echo "<input type='hidden' value='". $row['id_controle']."' name='id_controle' />";
             echo "<td>".$row['id_controle']."</td>";
             echo "<td>".$row['nom_classe']."</td>";
             echo "<td>".$row['matiere']."</td>";
             echo "<td>". dateEnToDateFr($row['date_controle'])."</td>";
-            echo "<td><a href='modif-controle/".$row['id_controle']."' class='btn btn-success'>Modifier notes</a></td>";
-            echo "<td><a href='ajout-note/".$row['id_controle']."' class='btn btn-info'>Ajouter</a></td>";
+                //button modif
+                echo "<td><a href='modif-controle/".$row['id_controle']."' class='btn btn-success ";
+                if($isNoted == false){echo ' disabled ';}
+                echo "' >Modifier notes</a></td>";
+
+                echo "<td><a href='ajout-note/".$row['id_controle']."' class='btn btn-info ";
+                if($isNoted == true){echo ' disabled ';}
+                echo "' >Ajouter</a></td>";
+
             echo "<td><a href='#' class='btn btn-danger' data-toggle='modal' data-target='#smallModal".$row['id_controle']."'>Supprimer</a></td>";
             echo "</tr>";
             echo "<div class='modal' id='smallModal".$row['id_controle']."' tabindex='-1' role='dialog' aria-labelledby='smallModal' aria-hidden='true'>";
@@ -216,7 +231,7 @@ class Controle{
         echo "</tr></thead><tbody>";
         echo "<form action='' method='POST'>";
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-            extract($row);	
+            extract($row);
             echo "<tr>";
                 echo "<input type='hidden' value='". $row['id_controle']."' name='id_controle' />";
                 echo "<input type='hidden' name='id_eleve[]' value='". $row['id_eleve']."' />";
@@ -225,7 +240,7 @@ class Controle{
                 echo "<td><input class='form-control' type='text' disabled value='". $row['prenom']."' name='prenom".$row['id_eleve']."'/></td>";
                     echo "<td><input class='form-check-input' disabled type='checkbox'";
                     if($row['absence'] == true){echo ' checked ';}
-                    echo  " name='abs[]' value='".$row['id_eleve']." '></td>";
+                    echo  " name='abs[]' value='".$row['id_eleve']."'></td>";
                 echo "<td><input class='form-control' type='text' required name='notes[]' value='".$row['note']."'/></td>";
             echo "</tr>";   
         }
@@ -249,13 +264,14 @@ class Controle{
         echo "<form action='' method='POST'>";
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);	
+            
             echo "<tr>";
                 echo "<input type='hidden' value='".$id."' name='id_controle' />";
                 echo "<input type='hidden' name='id_eleve[]' value='". $row['id_eleve']."' />";
                 echo "<td><input class='form-control' type='text' disabled value='". $row['id_eleve']."' name='id_eleve".$row['id_eleve']."'/></td>";
                 echo "<td><input class='form-control' type='text' disabled value='". $row['nom']."' name='nom".$row['id_eleve']."'/></td>";
                 echo "<td><input class='form-control' type='text' disabled value='". $row['prenom']."' name='prenom".$row['id_eleve']."'/></td>";
-                echo "<td><input class='form-check-input' type='checkbox' name='abs[]' value=''></td>";
+                echo "<td><input class='form-check-input' type='checkbox' name='abs[]' value='".$row['id_eleve']."'></td>";
                 echo "<td><input class='form-control' type='text' required name='notes[]' value=''/></td>";
             echo "</tr>";   
         }
@@ -325,6 +341,24 @@ class Controle{
         
         $stmt->execute();
         return $stmt;
+
+        $conn=null;
+        $stmt=null;
+    }
+
+    public function sqlVerifNoteControle($id_controle){
+        $database = new Database();
+        $conn = $database->getConnection();
+
+        $sqlQuery = "SELECT note FROM "
+                    .$this->db_tables[2].
+                    " WHERE controle_fk=$id_controle";
+
+        $stmt = $conn->prepare($sqlQuery);              
+        
+        $stmt->execute();
+        $tab=$stmt->fetch();
+        return $tab;
 
         $conn=null;
         $stmt=null;

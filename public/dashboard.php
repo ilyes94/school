@@ -13,6 +13,7 @@
 	if(isset($_POST['delete'])){
 		$user->setIdUtilisateur($_POST['id_utilisateur']);
 		$tab = $user->sqlVerifRole($user->getIdUtilisateur());
+		
 		if($tab['role'] == 'Directeur'){
 			$error = true;
 		}else{
