@@ -37,6 +37,17 @@
             <li><a class="dropdown-item" href="<?= $router->generate('ajout-controle')?>">Ajouter un contrôle</a></li>
           </ul>
         </li>
+        <!-- Controles -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          CDI
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="<?= $router->generate('cdi')?>">Acceder au CDI</a></li>
+            <li><a class="dropdown-item" href="<?= $router->generate('mes-emprunts', array('id' => $_SESSION['id_eleve']))?>">Mes emprunts</a></li>
+            <li><a class="dropdown-item" href="<?= $router->generate('espace-documentaliste')?>">Espace documentaliste</a></li>
+          </ul>
+        </li>
       </ul>
       <form class="d-flex">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">

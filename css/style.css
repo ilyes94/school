@@ -1,3 +1,32 @@
-.form-check-input{
+.form-check-input {
     margin-left: 1.1rem;
+}
+
+.img_thumb {
+    margin: 0 auto;
+    width: auto !important;
+    max-width: 400px;
+    height: auto;
+    max-height: 300px;
+}
+
+.typecat {
+    margin-top: 1rem;
+    margin-left: 1rem;
+}
+
+.auteur {
+    text-decoration: underline;
+}
+
+.bg_card {
+    background-color: #1b263b;
+}
+
+.disponible {
+    color: green;
+}
+
+.indisponible {
+    color: red;
 }

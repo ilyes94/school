@@ -13,14 +13,17 @@
         $hashPwd = hash ('sha256', $_POST['password']);
         $user->setPwd($hashPwd);
         $tab = $user->sqlVerifLoginPwd($user->getLogin(), $user->getPwd());
-
+        
         if ($tab==null) {
             $error = true;
             $message="Mauvais email ou mot de passe!";
         }else{
-
+            if($tab["role"] == 'Eléve'){
+                $idEleve = $user->sqlGetIdEleve();
+            }
             $_SESSION["userType"]=$tab["role"];
             $_SESSION["id"]=$tab["id_utilisateur"];
+            $_SESSION["id_eleve"]=$idEleve["id_eleve"];
             $_SESSION["prenom"]=$tab["prenom"];
             header('Location:'.$router->generate('dashboard'));
         }

@@ -180,8 +180,11 @@ class User{
         return $this;
     }
     
-    // Table
-    private $db_table = "utilisateur";  
+    // Tables
+    private $db_tables = [
+        "utilisateur",
+        "eleve"
+    ];  
 
 
     function genUsers(){
@@ -321,7 +324,7 @@ class User{
         $database = new Database();
         $conn = $database->getConnection();
 
-        $sqlQuery = "SELECT * FROM ". $this->db_table;
+        $sqlQuery = "SELECT * FROM ". $this->db_tables[0];
 
          
         $stmt = $conn->prepare($sqlQuery);              
@@ -337,7 +340,7 @@ class User{
         $database = new Database();
         $conn = $database->getConnection();
 
-        $sqlQuery = "SELECT * FROM $this->db_table WHERE id_utilisateur = $this->id_utilisateur";
+        $sqlQuery = "SELECT * FROM ". $this->db_tables[0] ." WHERE id_utilisateur = $this->id_utilisateur";
         
         $stmt = $conn->prepare($sqlQuery);
 
@@ -352,7 +355,7 @@ class User{
         $database = new Database();
         $conn = $database->getConnection();
     
-        $stmt=$conn->prepare("select * from $this->db_table where email=? limit 1");
+        $stmt=$conn->prepare("SELECT * FROM ". $this->db_tables[0] ." WHERE email=? limit 1");
         $stmt->execute([$email]);
         $tab=$stmt->fetch();
         return $tab;
@@ -365,7 +368,7 @@ class User{
         $database = new Database();
         $conn = $database->getConnection();
     
-        $stmt=$conn->prepare("select * from $this->db_table where login=? and pwd=? limit 1");
+        $stmt=$conn->prepare("SELECT * FROM ". $this->db_tables[0] ." WHERE login=? and pwd=? limit 1");
         $stmt->execute(array($login, $pwd));
         
         $tab=$stmt->fetch();
@@ -374,12 +377,28 @@ class User{
         $conn=null;
         $stmt=null;
     }
+    public function sqlGetIdEleve(){
+        $database = new Database();
+        $conn = $database->getConnection();
+    
+        $stmt=$conn->prepare("SELECT id_eleve FROM ". $this->db_tables[0] .
+                             " INNER JOIN ".$this->db_tables[1]." 
+                             ON utilisateur.id_utilisateur = eleve.utilisateur_fk");
+        $stmt->execute();
+        
+        $tab=$stmt->fetch();
+        return $tab;
+
+        $conn=null;
+        $stmt=null;
+    }
+    
 
     public function sqlVerifRole($id_utilisateur){
         $database = new Database();
         $conn = $database->getConnection();
 
-        $stmt=$conn->prepare("select role from $this->db_table where id_utilisateur = $id_utilisateur");
+        $stmt=$conn->prepare("select role from ".$this->db_tables[0] ."where id_utilisateur = $id_utilisateur");
         $stmt->execute();
         $tab=$stmt->fetch();
         return $tab;
@@ -392,7 +411,7 @@ class User{
         $database = new Database();
         $conn = $database->getConnection();
 
-        $stmt=$conn->prepare ("DELETE FROM ". $this->db_table ." WHERE id_utilisateur = $id_utilisateur");
+        $stmt=$conn->prepare ("DELETE FROM ". $this->db_tables[0] ." WHERE id_utilisateur = $id_utilisateur");
         $stmt->execute();
         return $stmt;
 
@@ -403,7 +422,7 @@ class User{
         $database = new Database();
         $conn = $database->getConnection();
 
-        $stmt=$conn->prepare("SELECT id_utilisateur FROM " .$this->db_table." ORDER BY id_utilisateur desc limit 1 ");
+        $stmt=$conn->prepare("SELECT id_utilisateur FROM " .$this->db_tables[0]." ORDER BY id_utilisateur desc limit 1 ");
 
         $stmt->execute();
         $tab=$stmt->fetch();

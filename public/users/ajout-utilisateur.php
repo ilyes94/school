@@ -91,7 +91,7 @@
         <label for="label-control">Rôle</label>
         <select name="role" class="form-select mb-3">
             <option value="Secrétaire">Secrétaire</option>
-            <option value="Eléve">Eléve</option>
+            <option value="Documentaliste">Documentaliste</option>
         </select>
 
         <input type='submit' name='create' value='Enregistrer' class='btn btn-success'>

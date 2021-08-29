@@ -43,9 +43,19 @@ function les_annee_scolaire($annee_debut = 2020)
 
 }
 
-function dateEnToDateFr($dateEn)
-{
+function dateEnToDateFr($dateEn){
     //$dateEn='2019-02-26';
     return substr($dateEn, 8, 2) . "/" . substr($dateEn, 5, 2) . "/" . substr($dateEn, 0, 4);
     // Result: '26/02/2019'
+}
+function dateFrToDateEn($dateFr){
+    //$dateFR='26/02/2019';
+    return substr($dateFr, 6, 4) . "-" . substr($dateFr, 3, 2) . "-" . substr($dateFr, 0, 2);
+    // Result: '2019-02-26'
+}
+
+function generateDateRetour($dateEmprunt){
+    $duree=14;
+    $dateDebut = date("$dateEmprunt");
+    return (date('Y-m-d', strtotime($dateDebut.' +'.$duree.' days')));
 }
