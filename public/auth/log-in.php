@@ -2,6 +2,10 @@
     $user = new User();
     $titlePage = "Connexion";
     $error = false;
+
+    if(isset($_SESSION['userType'])){
+        header('Location:'.$router->generate('dashboard'));
+    }
     
 
     if(!empty($_POST)){

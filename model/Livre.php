@@ -238,19 +238,22 @@ class Livre{
         echo "<th>Date de retour</th>";
         echo "<th>Action</th>";
         echo "</tr></thead><tbody>";
-
+        
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
             //generation de la date de retour
             $dateRetour = generateDateRetour($row['date_emprunt']);
-
-            echo "<tr>";
-                echo "<td>".$row['nom'].' '.$row['prenom']."</td>";
-                echo "<td>".$row['nom_classe']."</td>";
-                echo "<td>".$row['titre_livre']."</td>";
-                echo "<td>".dateEnToDateFr($row['date_emprunt'])."</td>";
-                echo "<td>".dateEnToDateFr($dateRetour)."</td>";
-            echo "</tr>";
+            echo "<form action='' method='POST'>";
+                echo "<tr>";
+                    echo "<td>".$row['nom'].' '.$row['prenom']."</td>";
+                    echo "<td>".$row['nom_classe']."</td>";
+                    echo "<td>".$row['titre_livre']."</td>";
+                    echo "<td>".dateEnToDateFr($row['date_emprunt'])."</td>";
+                    echo "<td>".dateEnToDateFr($dateRetour)."</td>";
+                    echo "<input type='hidden' name='isbn' value='".$row['isbn']."'/>";
+                    echo "<td><input type='submit' name='retour' value='Retour livre' class='btn btn-info'/></td>";
+                echo "</tr>";
+            echo "</form>";
         }
         echo "</tbody></table>";
     }
@@ -353,6 +356,18 @@ class Livre{
         $conn=null;
         $stmt=null;
         
+    }
+
+    public function sqlLivreRendu($isbn){
+        $database = new Database();
+        $conn = $database->getConnection();
+
+        $stmt=$conn->prepare ("DELETE FROM ". $this->db_tables[1] ." WHERE isbn_fk = $isbn");
+        $stmt->execute();
+        return $stmt;
+
+        $conn=null;
+        $stmt=null;
     }
 
 }
