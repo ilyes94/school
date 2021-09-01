@@ -25,7 +25,7 @@ CREATE TABLE eleve (
 	adresse VARCHAR(255),
 	ville VARCHAR(64),
 	cp VARCHAR(15),
-	tel VARCHAR(64),
+	tel VARCHAR(20),
 	date_inscription DATE,
 	utilisateur_fk INT
 );

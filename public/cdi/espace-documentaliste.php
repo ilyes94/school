@@ -13,7 +13,8 @@
 
     if(isset($_POST['retour'])){
         $livre->setIsbn($_POST['isbn']);
-		$rendre = $livre->sqlLivreRendu($livre->getIsbn());
+        $rendre = $livre->sqlLivreRendu($livre->getIsbn()); 
+        $setRendu = $livre->setRendu($livre->getIsbn());
 		$success = true;
 	}
 

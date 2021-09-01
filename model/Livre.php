@@ -369,5 +369,16 @@ class Livre{
         $conn=null;
         $stmt=null;
     }
+    public function setRendu($isbn){
+        $database = new Database();
+        $conn = $database->getConnection();
+
+        $stmt=$conn->prepare ("UPDATE ". $this->db_tables[0] ." SET etat = 0 WHERE isbn = $isbn");
+        $stmt->execute();
+        return $stmt;
+
+        $conn=null;
+        $stmt=null;
+    }
 
 }
