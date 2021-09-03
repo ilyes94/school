@@ -92,6 +92,7 @@
         <select name="role" class="form-select mb-3">
             <option value="Secrétaire">Secrétaire</option>
             <option value="Documentaliste">Documentaliste</option>
+            <option value="Enseignant">Enseignant</option>
         </select>
 
         <input type='submit' name='create' value='Enregistrer' class='btn btn-success'>
