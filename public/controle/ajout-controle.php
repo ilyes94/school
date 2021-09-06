@@ -1,5 +1,10 @@
 <?php
 
+if($_SESSION['userType'] == 'Eléve' || $_SESSION['userType']== 'Documentaliste'){
+    header('Location:'.$router->generate('dashboard'));
+    exit();
+}
+
     $classe = new Classe();
     $sqlAllClasse = $classe->getAllClasse();
     $allClasse = $sqlAllClasse->fetchAll();

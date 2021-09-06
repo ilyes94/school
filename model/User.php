@@ -197,7 +197,7 @@ class User{
         echo "<th>Prenom</th>";
         echo "<th>Role</th>";
         echo "<th>E-mail</th>";
-        if($_SESSION['userType'] !='Eléve'){
+        if($_SESSION['userType'] == 'Directeur' || $_SESSION['userType']== 'Secrétaire'){
             echo "<th>Modifier</th>";
             echo "<th>Supprimer</th>";
         }
@@ -212,7 +212,7 @@ class User{
             echo "<td>".ucfirst($row['prenom'])."</td>";
             echo "<td>".$row['role']."</td>";
             echo "<td>".$row['email']."</td>";
-            if($_SESSION['userType'] !='Eléve'){
+            if($_SESSION['userType'] == 'Directeur' || $_SESSION['userType']== 'Secrétaire'){
                 echo "<td><a href='modif-user/".$row['id_utilisateur']."' class='btn btn-info'>Modifier</a></td>";
                 echo "<td><a href='#' class='btn btn-danger' data-toggle='modal' data-target='#smallModal".$row['id_utilisateur']."'>Supprimer</a></td>";
             }
@@ -224,7 +224,7 @@ class User{
 									echo "<h5 class='modal-title' id='myModalLabel'>Confirmation</h5>";
 									echo "</div>";
 									echo "<div class='modal-body'>";
-										echo "<p>Confirmez la suppression de l'utilisateur <b>".ucfirst($row['login'])."</b><p>";
+										echo "<p>Confirmez la suppression de l'utilisateur <b>".ucfirst($row['nom'].' '.$row['prenom'])."</b><p>";
 									echo "</div>";
 									echo "<div class='modal-footer'>";
 										echo "<button type='button' class='btn btn-secondary' data-dismiss='modal'>Annuler</button>";
@@ -254,31 +254,34 @@ class User{
                 echo "<input type='text' name='prenom' id='prenom' class='form-control' value=".$row['prenom']." required>";
             echo "</div>";
             echo "<div class='form-group'>";
-                echo "<label class='label-control'>Login</label>";
-                echo "<input type='text' name='login' id='login' class='form-control' value=".$row['login']." required>";
-            echo "</div>";
-            echo "<div class='form-group'>";
                 echo "<label class='label-control'>E-mail</label>";
                 echo "<input type='text' name='email' id='email' class='form-control' value=".$row['email']." required>";
             echo "</div>";
-            if($_SESSION['userType'] =='Directeur'){
-                echo "<div class='form-group'>";
-                    echo "<label class='label-control'>Role</label>";
-                    echo "<select class='form-control' name='role'>";
-                        echo "<option ";
-                        if($row['role']=='Secrétaire') {echo 'selected ';} 
-                        echo ">Secrétaire</option>";
+            echo "<div class='form-group'>";
+                echo "<label class='label-control'>Role</label>";
+                echo "<select class='form-control' name='role'>";
+                    echo "<option ";
+                    if($row['role']=='Secrétaire') {echo 'selected ';} 
+                    echo ">Secrétaire</option>";
 
-                        echo "<option ";
-                        if($row['role']=='Directeur') {echo 'selected ';} 
-                        echo ">Directeur</option>";
+                    echo "<option ";
+                    if($row['role']=='Directeur') {echo 'selected ';} 
+                    echo ">Directeur</option>";
 
-                        echo "<option ";
-                        if($row['role']=='Eléve') {echo 'selected ';} 
-                        echo ">Eléve</option>";
-                    echo "</select>";
-                echo "</div>";
-            }
+                    echo "<option ";
+                    if($row['role']=='Eléve') {echo 'selected ';} 
+                    echo ">Eléve</option>";
+
+                    echo "<option ";
+                    if($row['role']=='Documentaliste') {echo 'selected ';} 
+                    echo ">Documentaliste</option>";
+                    echo "<option ";
+
+                    if($row['role']=='Enseignant') {echo 'selected ';} 
+                    echo ">Enseignant</option>";
+                echo "</select>";
+            echo "</div>";
+            
             echo "<input type='submit' name='update' value='Modifier' class='btn btn-success'>";
         echo '</form>';
     }

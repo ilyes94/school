@@ -1,6 +1,11 @@
 <?php
     $livre = new Livre();
 
+    if($_SESSION['userType'] == 'Eléve'){
+        header('Location:'.$router->generate('dashboard'));
+        exit();
+    }
+
     @$id_eleve=$params['id'];
     $livre->setEleve($id_eleve);
 

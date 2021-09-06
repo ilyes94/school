@@ -321,14 +321,17 @@ class Eleve{
         echo "<th>Classe</th>";
         echo "<th>Année scolaire</th>";
         echo "<th>Attestation</th>";
-        echo "<th>Modifier</th>";
-        echo "<th>Supprimer</th>";
+        if($_SESSION['userType'] == 'Directeur' || $_SESSION['userType']== 'Secrétaire'){
+            echo "<th>Modifier</th>";
+            echo "<th>Supprimer</th>";
+        }    
         echo "</tr></thead><tbody>";
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
             echo "<form action='' method='POST'>";	
-            echo "<input type='hidden' value='". $row['id_eleve']."' name='id_eleve' />"; 
+            echo "<input type='hidden' value='". $row['id_eleve']."' name='id_eleve' />";
+            echo "<input type='hidden' value='". $row['utilisateur_fk']."' name='id_user' />"; 
             echo "<td>".$row['id_eleve']."</td>";
             echo "<td>".ucfirst($row['nom'])."</td>";
             echo "<td>".ucfirst($row['prenom'])."</td>";
@@ -337,9 +340,10 @@ class Eleve{
             echo "<td>".$row['nom_classe']."</td>";
             echo "<td>".$row['annee_scolaire']."</td>";
             echo "<td><a href='".$_SESSION['root']."/public/eleves/attestation-eleve.php?id=".$row['id_eleve']."' class='btn btn-success'>Attestation</a></td>";
-            echo "<td><a href='modif-eleve/".$row['id_eleve']."' class='btn btn-info'>Modifier</a></td>";
-            echo "<td><a href='#' class='btn btn-danger' data-toggle='modal' data-target='#smallModal".$row['id_eleve']."'>Supprimer</a></td>";
-        
+            if($_SESSION['userType'] == 'Directeur' || $_SESSION['userType']== 'Secrétaire'){
+                echo "<td><a href='modif-eleve/".$row['id_eleve']."' class='btn btn-info'>Modifier</a></td>";
+                echo "<td><a href='#' class='btn btn-danger' data-toggle='modal' data-target='#smallModal".$row['id_eleve']."'>Supprimer</a></td>";
+            }    
             echo "</tr>";
             echo "<div class='modal' id='smallModal".$row['id_eleve']."' tabindex='-1' role='dialog' aria-labelledby='smallModal' aria-hidden='true'>";
 						echo "<div class='modal-dialog'>";
@@ -398,20 +402,6 @@ class Eleve{
                 echo "<label class='label-control'>Code postal</label>";
                 echo "<input type='text' name='cp' id='cp' class='form-control' value='".$row['cp']."' required>";
             echo "</div>";
-            /*
-                echo "<div class='form-group'>";
-                    echo "<label class='label-control'>Role</label>";
-                    echo "<select class='form-control' name='role'>";
-                        echo "<option ";
-                        if($row['role']=='Secrétaire') {echo 'selected ';} 
-                        echo ">Secrétaire</option>";
-
-                        echo "<option ";
-                        if($row['role']=='Directeur') {echo 'selected ';} 
-                        echo ">Directeur</option>";
-                    echo "</select>";
-                echo "</div>";
-                */
             echo "<input type='submit' name='update' value='Modifier' class='btn btn-success'>";
         echo '</form>';
     }

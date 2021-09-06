@@ -5,6 +5,11 @@
         $annee_scolaire=annee_scolaire_actuelle();
     }
 
+    if($_SESSION['userType'] == 'Eléve' || $_SESSION['userType']== 'Documentaliste' || $_SESSION['userType']== 'Enseignant'){
+        header('Location:'.$router->generate('dashboard'));
+        exit();
+    }
+
     $classe = new Classe();
     $sqlAllClasse = $classe->getAllClasse();
     $allClasse = $sqlAllClasse->fetchAll();

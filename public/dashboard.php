@@ -31,6 +31,6 @@
 	<div class='alert alert-success'>L'utilisateur à été supprimer</div>
 <?php } ?>
 <?php $user->genUsers();?>
-<?php if($_SESSION['userType'] !='Eléve'){?>
+<?php if($_SESSION['userType'] == 'Directeur' || $_SESSION['userType']== 'Secrétaire'){?>
 	<a class="btn btn-primary" href="<?=$router->generate('ajout-utilisateur')?>">Ajouter un utilisateur</a>
 <?php } ?>

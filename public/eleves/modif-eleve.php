@@ -1,7 +1,7 @@
 <?php
     $eleve = new Eleve();
 
-    if($_SESSION['userType'] == 'Eléve'){
+    if($_SESSION['userType'] == 'Eléve' || $_SESSION['userType']== 'Documentaliste' || $_SESSION['userType']== 'Enseignant'){
         header('Location:'.$router->generate('dashboard'));
         exit();
     }

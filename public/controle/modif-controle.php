@@ -1,7 +1,7 @@
 <?php
     $controle = new Controle();
 
-    if($_SESSION['userType'] == 'Eléve'){
+    if($_SESSION['userType'] == 'Eléve' || $_SESSION['userType']== 'Documentaliste'){
         header('Location:'.$router->generate('dashboard'));
         exit();
     }
@@ -10,10 +10,10 @@
 
     @$id_controle=$params['id'];
     $controle->setId_controle($id_controle);
+
     $success = false;
     $error = false;
-    var_dump($_POST);
-    echo'<br>';
+
     if(!empty($_POST)){
         $countNotes = count($_POST['notes']);
         //verification des champs

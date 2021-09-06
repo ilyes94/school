@@ -93,7 +93,7 @@ CREATE TABLE emprunt (
 );
 
 	ALTER TABLE emprunt ADD CONSTRAINT FOREIGN KEY(eleve_fk) 
-	REFERENCES eleve(id_eleve);
+	REFERENCES eleve(id_eleve) ON DELETE CASCADE;
 
 	ALTER TABLE emprunt ADD CONSTRAINT FOREIGN KEY(isbn_fk) 
 	REFERENCES livre(isbn);
@@ -107,7 +107,7 @@ INSERT INTO `utilisateur` (`id_utilisateur`,`nom`, `prenom`,`login`,`pwd`,`role`
 	(6,'Damiri','Hind2','Damiri2','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'Eléve','hind2@gmail.com'),
 	(7,'Damiri','Hind3','Damiri3','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'Eléve','hind3@gmail.com'),
 	(8,'Dodumentaliste','Champ','doc','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3','Documentaliste','documentaliste@school.com'),
-	(9,'Enseignant','Champ','prof','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3','Enseignant','Enseignant@school.com'),;
+	(9,'Enseignant','Champ','prof','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3','Enseignant','enseignant@school.com');
 
 			 
 INSERT INTO `eleve` (`id_eleve`,`sexe`,`nom`,`prenom`, `email`,`date_naissance`,`lieu_naissance`,`adresse`,`ville`,`cp`,`tel`,`date_inscription`,`utilisateur_fk`) VALUES

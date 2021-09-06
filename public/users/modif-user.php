@@ -1,7 +1,7 @@
 <?php
     $user = new User();
 
-    if($_SESSION['userType'] == 'Eléve'){
+    if($_SESSION['userType'] == 'Eléve' || $_SESSION['userType'] == 'Documentaliste' || $_SESSION['userType'] == 'Enseignant'){
         header('Location:'.$router->generate('dashboard'));
         exit();
     }
@@ -13,14 +13,13 @@
     $success = false;
     $error = false;
     if(!empty($_POST)){
-        if(empty($_POST['nom'] && $_POST['prenom'] && $_POST['login'] && $_POST['email'] && $_POST['role'])){
+        if(empty($_POST['nom'] && $_POST['prenom'] && $_POST['email'] && $_POST['role'])){
             $error = true;
             $message = "Veuillez remplir tout les champs";
         }
         //Initialisation de l'objet
         $user->setNom($_POST['nom']);
         $user->setPrenom($_POST['prenom']);
-        $user->setLogin($_POST['login']);
         $user->setEmail($_POST['email']);
         $user->setRole($_POST['role']);
         //Verification de l'email
@@ -32,12 +31,11 @@
             $database = new Database();
             $conn = $database->getConnection();
 
-            $stmt = $conn->prepare("UPDATE utilisateur SET nom = :nom, prenom = :prenom, login = :login, email = :email, role = :role WHERE id_utilisateur = :id");
+            $stmt = $conn->prepare("UPDATE utilisateur SET nom = :nom, prenom = :prenom, email = :email, role = :role WHERE id_utilisateur = :id");
             $stmt->execute([
                 'id' => $user->getIdUtilisateur(),
                 'nom' => $user->getNom(),
                 'prenom' => $user->getPrenom(),
-                'login' =>$user->getLogin(),
                 'email' =>$user->getEmail(),
                 'role' =>$user->getRole()
             ]);

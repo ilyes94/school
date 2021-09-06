@@ -1,6 +1,11 @@
 <?php
     $controle = new Controle();
 
+    if($_SESSION['userType'] == 'Documentaliste'){
+        header('Location:'.$router->generate('espace-documentaliste'));
+        exit();
+    }
+
     $titlePage = "Liste des controles";
 
     $success = false;

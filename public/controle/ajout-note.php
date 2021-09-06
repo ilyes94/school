@@ -1,7 +1,7 @@
 <?php
     $controle = new Controle();
 
-    if($_SESSION['userType'] == 'Eléve'){
+    if($_SESSION['userType'] == 'Eléve' || $_SESSION['userType']== 'Documentaliste'){
         header('Location:'.$router->generate('dashboard'));
         exit();
     }

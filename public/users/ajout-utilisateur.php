@@ -2,6 +2,11 @@
 
     $titlePage = "Ajouter un utilisateur";
 
+    if($_SESSION['userType'] == 'Eléve' || $_SESSION['userType']== 'Documentaliste' || $_SESSION['userType']== 'Enseignant'){
+        header('Location:'.$router->generate('dashboard'));
+        exit();
+    }
+
     $success = false;
     $error = false;
     if(!empty($_POST)){

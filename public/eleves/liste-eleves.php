@@ -7,10 +7,11 @@
 
     $success = false;
     $error = false;
+
     //suppression
     if(isset($_POST['delete'])){
         $user = new User();
-        $eleve->setId_eleve($_POST['id_eleve']);
+        $eleve->setId_eleve($_POST['id_user']);
 		$del = $user->sqlDeleteUser($eleve->getId_eleve());
 		$success = true;
 	}
@@ -38,8 +39,6 @@
 	else{
         $search="";
     }
-    //requete
-
 ?>
 
 <h1> Liste des eleves </h1>
@@ -70,8 +69,11 @@
                     <option value="0">Toute les classes</option>
                     <?php foreach($allClasse as $clas){?>
                     <option value="<?=$clas['nom_classe']?>">
-                    <?=$clas['nom_classe']?></option>	
-                    <?php } ?>						
+                    <?=$clas['nom_classe']?></option>
+                    <?php } ?>
+                    <option <?php if(isset($_GET['classe'])&& $_GET['classe']!= 0) echo 'selected' ?> > 
+                            <?php if(isset($_GET['classe'])&& $_GET['classe']!= 0) echo $classe; ?>
+                    </option>					
                 </select>
                 
             <input type="text" name="search" value="<?php echo $search ?>" class="form-control" placeholder="Nom ou prénom">
@@ -91,4 +93,6 @@
 
     }
         ?>
-        <a class="btn btn-primary" href="<?=$router->generate('ajout-eleve')?>">Ajouter un éléve</a>
+        <?php if($_SESSION['userType'] == 'Directeur' || $_SESSION['userType']== 'Secrétaire'){?>
+            <a class="btn btn-primary" href="<?=$router->generate('ajout-eleve')?>">Ajouter un éléve</a>
+        <?php } ?>

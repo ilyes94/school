@@ -27,7 +27,7 @@ function nombre_annee_scolaire()
     $mois = date("m");
     $annee_actuelle = date("Y");
     if ($mois >= 7 && $mois <= 12)
-        return ($annee_actuelle - $annee_debut) + 1;
+        return ($annee_actuelle - $annee_debut) + 2;
     else
         return $annee_actuelle - $annee_debut;
 }
