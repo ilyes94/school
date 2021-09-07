@@ -5,8 +5,6 @@
     $error = false;
 
 	$titlePage = "CDI";
-
-    var_dump($_POST);
     
     if(!empty($_POST)){
         

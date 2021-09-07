@@ -12,8 +12,6 @@
 
     @$id_controle=$params['id'];
     $controle->setId_controle($id_controle);
-    
-    var_dump($_POST);
 
     $classe = $controle->getSqlClasseByControle();
     $controle->setClasse($classe['classe_fk']);
@@ -65,7 +63,7 @@
                         'absence' => true
                     ]);
                 }
-                $success = true;
+                header('Location:'.$router->generate('liste-controles'));
                 
             }
         }

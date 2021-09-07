@@ -166,9 +166,14 @@ class Controle{
         echo "<th>Classe</th>";
         echo "<th>Matierre</th>";
         echo "<th>Date</th>";
-        echo "<th>Modifier</th>";
-        echo "<th>Ajout notes</th>";
-        echo "<th>Supprimer</th>";
+        if($_SESSION['userType'] =='Eléve'){
+            echo "<th>Voir notes</th>";
+        }
+        if($_SESSION['userType'] !='Eléve'){
+            echo "<th>Modifier</th>";
+            echo "<th>Ajout notes</th>";
+            echo "<th>Supprimer</th>";
+        }
         echo "</tr></thead><tbody>";
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
@@ -187,16 +192,23 @@ class Controle{
             echo "<td>".$row['nom_classe']."</td>";
             echo "<td>".$row['matiere']."</td>";
             echo "<td>". dateEnToDateFr($row['date_controle'])."</td>";
+                if($_SESSION['userType'] =='Eléve'){
+                    echo "<td><a href='modif-controle/".$row['id_controle']."' class='btn btn-info ";
+                    if($isNoted == false){echo ' disabled ';}
+                    echo "' >Voir les notes</a></td>";
+                }
                 //button modif
-                echo "<td><a href='modif-controle/".$row['id_controle']."' class='btn btn-success ";
-                if($isNoted == false){echo ' disabled ';}
-                echo "' >Modifier notes</a></td>";
+                if($_SESSION['userType'] !='Eléve'){
+                    echo "<td><a href='modif-controle/".$row['id_controle']."' class='btn btn-success ";
+                    if($isNoted == false){echo ' disabled ';}
+                    echo "' >Modifier notes</a></td>";
 
-                echo "<td><a href='ajout-note/".$row['id_controle']."' class='btn btn-info ";
-                if($isNoted == true){echo ' disabled ';}
-                echo "' >Ajouter</a></td>";
-
-            echo "<td><a href='#' class='btn btn-danger' data-toggle='modal' data-target='#smallModal".$row['id_controle']."'>Supprimer</a></td>";
+                    echo "<td><a href='ajout-note/".$row['id_controle']."' class='btn btn-info ";
+                    if($isNoted == true){echo ' disabled ';}
+                    echo "' >Ajouter</a></td>";
+                
+                    echo "<td><a href='#' class='btn btn-danger' data-toggle='modal' data-target='#smallModal".$row['id_controle']."'>Supprimer</a></td>";
+                }
             echo "</tr>";
             echo "<div class='modal' id='smallModal".$row['id_controle']."' tabindex='-1' role='dialog' aria-labelledby='smallModal' aria-hidden='true'>";
 						echo "<div class='modal-dialog'>";
@@ -241,10 +253,14 @@ class Controle{
                     echo "<td><input class='form-check-input' disabled type='checkbox'";
                     if($row['absence'] == true){echo ' checked ';}
                     echo  " name='abs[]' value='".$row['id_eleve']."'></td>";
-                echo "<td><input class='form-control' type='text' required name='notes[]' value='".$row['note']."'/></td>";
+                    echo "<td><input class='form-control' type='text'";
+                    if($_SESSION['userType'] =='Eléve'){echo ' disabled ';}
+                    echo " required name='notes[]' value='".$row['note']."'/></td>";
             echo "</tr>";   
         }
-        echo "<input type='submit' name='update' value='Modifier' class='btn btn-success'>";
+        if($_SESSION['userType'] !='Eléve'){
+            echo "<input type='submit' name='update' value='Modifier' class='btn btn-success'>";
+        }
         echo "</form>";
         echo "</tbody></table>";
         

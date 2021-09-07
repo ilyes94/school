@@ -14,8 +14,6 @@
 
     $titlePage = "Espace documentaliste";
 
-    var_dump($_POST);
-
     if(isset($_POST['retour'])){
         $livre->setIsbn($_POST['isbn']);
         $rendre = $livre->sqlLivreRendu($livre->getIsbn()); 

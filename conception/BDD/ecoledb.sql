@@ -99,15 +99,15 @@ CREATE TABLE emprunt (
 	REFERENCES livre(isbn);
 
 INSERT INTO `utilisateur` (`id_utilisateur`,`nom`, `prenom`,`login`,`pwd`,`role`,`email`) VALUES 
- 	(1,'Directeur','Champ','admin','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3','Directeur','admin@school.com'),
- 	(2,'Okay','Champ','sec','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3','Secrétaire','sec1@school.com'),
+ 	(1,'Directeur','Admin','admin','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3','Directeur','admin@school.com'),
+ 	(2,'Okay','Sec','sec','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3','Secrétaire','sec1@school.com'),
 	(3,'Damiri','Hind','Damiri','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'Eléve','hind@gmail.com'),
 	(4,'Kaftani','Souad','Souad1','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'Eléve','souad@gmail.com'),
 	(5,'Damiri','Hind1','Damiri1','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'Eléve','hind1@gmail.com'),
 	(6,'Damiri','Hind2','Damiri2','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'Eléve','hind2@gmail.com'),
 	(7,'Damiri','Hind3','Damiri3','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'Eléve','hind3@gmail.com'),
-	(8,'Dodumentaliste','Champ','doc','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3','Documentaliste','documentaliste@school.com'),
-	(9,'Enseignant','Champ','prof','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3','Enseignant','enseignant@school.com');
+	(8,'Dodumentaliste','Doc','doc','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3','Documentaliste','documentaliste@school.com'),
+	(9,'Enseignant','Prof','prof','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3','Enseignant','enseignant@school.com');
 
 			 
 INSERT INTO `eleve` (`id_eleve`,`sexe`,`nom`,`prenom`, `email`,`date_naissance`,`lieu_naissance`,`adresse`,`ville`,`cp`,`tel`,`date_inscription`,`utilisateur_fk`) VALUES
@@ -140,10 +140,13 @@ INSERT INTO `controle`(`id_controle`,`classe_fk`,`matiere`,`date_controle`) VALU
 
 INSERT INTO `note_controle`(`id_note_controle`,`controle_fk`,`eleve_fk`,`absence`,`note`) VALUES
 	(null,1,1,0,15),
-	(null,2,1,0,10),
 	(null,1,3,0,5),
 	(null,1,4,1,0),
-	(null,1,5,0,10);
+	(null,1,5,0,10),
+	(null,2,1,0,10),
+	(null,2,3,0,15),
+	(null,2,4,0,08),
+	(null,2,5,0,13);
 	
 INSERT INTO `livre` (`isbn`, `titre_livre`, `type_livre`, `auteur_livre`, `etat`, `img_livre`) VALUES
 (1, 'Naruto', 'Manga', 'Masashi Kishimito', 0, 'ouvrages/Naruto.jpg'),

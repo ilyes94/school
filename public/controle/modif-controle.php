@@ -1,7 +1,7 @@
 <?php
     $controle = new Controle();
 
-    if($_SESSION['userType'] == 'Eléve' || $_SESSION['userType']== 'Documentaliste'){
+    if($_SESSION['userType']== 'Documentaliste'){
         header('Location:'.$router->generate('dashboard'));
         exit();
     }
@@ -59,7 +59,12 @@
     }
 ?>
 <div class="jumbotron">
-	<h1>Modifiaction des notes</h1>
+    <?php if($_SESSION['userType'] =='Eléve'){ ?>
+        <h1>Visualisation des notes</h1>
+    <?php }else{ ?>
+        <h1>Modifiaction des notes</h1>
+    <?php } ?>
+	
     <p class="box-return"><a href="<?= $router->generate('liste-controles')?>"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i>
     <u>Retour à la liste des contrôles</u></a></p>
     <?php if($error == true){?>
