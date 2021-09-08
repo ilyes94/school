@@ -1,13 +1,16 @@
 <?php
     $livre = new Livre();
 
-    if($_SESSION['userType'] !== 'Eléve'){
+    @$id_eleve=$params['id'];
+    $livre->setEleve($id_eleve);
+
+    if($_SESSION['userType'] !== 'Eléve' || $_SESSION['id_eleve'] != $livre->getEleve()){
         header('Location:'.$router->generate('dashboard'));
         exit();
     }
 
-    @$id_eleve=$params['id'];
-    $livre->setEleve($id_eleve);
+
+
 
     $titlePage = "Mes emprunts";
 

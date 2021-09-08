@@ -24,9 +24,6 @@
 ?>
 <h1>Espace documentaliste</h1>
 <div class="jumbotron">
-    <p class="box-return"><a href="<?= $router->generate('cdi')?>"><i class="fa fa-chevron-circle-left" aria-hidden="true"></i>
-    <u>Retour au CDI</u></a></p>
-
     <?php if ($success == true){ ?>
 	<div class='alert alert-success'>Le livre à été rendu</div>
     <?php } ?>

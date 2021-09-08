@@ -14,7 +14,9 @@
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="<?= $router->generate('dashboard')?>">Liste des utilisateurs</a></li>
-            <li><a class="dropdown-item" href="<?= $router->generate('ajout-utilisateur')?>">Ajouter un utilisateur</a></li>
+            <?php if($_SESSION['userType'] == 'Directeur' || $_SESSION['userType']== 'Secrétaire'){ ?>
+              <li><a class="dropdown-item" href="<?= $router->generate('ajout-utilisateur')?>">Ajouter un utilisateur</a></li>
+              <?php } ?>  
           </ul>
         </li>
         <!-- Eleves -->
@@ -24,7 +26,9 @@
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="<?= $router->generate('liste-eleves')?>">Liste des éléves</a></li>
-            <li><a class="dropdown-item" href="<?= $router->generate('ajout-eleve')?>">Ajouter un éléve</a></li>
+            <?php if($_SESSION['userType'] == 'Directeur' || $_SESSION['userType']== 'Secrétaire'){ ?>
+              <li><a class="dropdown-item" href="<?= $router->generate('ajout-eleve')?>">Ajouter un éléve</a></li>
+            <?php } ?>  
           </ul>
         </li>
         <!-- Controles -->
@@ -34,7 +38,9 @@
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="<?= $router->generate('liste-controles')?>">Liste des controles</a></li>
+            <?php if($_SESSION['userType'] == 'Directeur' || $_SESSION['userType']== 'Secrétaire' || $_SESSION['userType']== 'Enseignant'){ ?>
             <li><a class="dropdown-item" href="<?= $router->generate('ajout-controle')?>">Ajouter un contrôle</a></li>
+            <?php } ?>
           </ul>
         </li>
         <!-- Controles -->
@@ -43,9 +49,13 @@
           CDI
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="<?= $router->generate('cdi')?>">Acceder au CDI</a></li>
-            <li><a class="dropdown-item" href="<?= $router->generate('mes-emprunts', array('id' => $_SESSION['id_eleve']))?>">Mes emprunts</a></li>
-            <li><a class="dropdown-item" href="<?= $router->generate('espace-documentaliste')?>">Espace documentaliste</a></li>
+            <?php if($_SESSION['userType'] == 'Eléve' ){ ?>
+              <li><a class="dropdown-item" href="<?= $router->generate('cdi')?>">Acceder au CDI</a></li>
+              <li><a class="dropdown-item" href="<?= $router->generate('mes-emprunts', array('id' => $_SESSION['id_eleve']))?>">Mes emprunts</a></li>
+            <?php } ?>  
+            <?php if($_SESSION['userType'] == 'Directeur' || $_SESSION['userType']== 'Secrétaire' || $_SESSION['userType']== 'Documentaliste'){ ?>
+              <li><a class="dropdown-item" href="<?= $router->generate('espace-documentaliste')?>">Espace documentaliste</a></li>
+            <?php } ?>
           </ul>
         </li>
       </ul>
